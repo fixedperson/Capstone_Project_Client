@@ -22,8 +22,8 @@ public class Player : MonoBehaviour
     private bool rDown; // 구르기 버튼
     private bool aDown; // 공격 버튼
 
-    private bool isRollReady = true; // 구르기 가능 여부
-    private bool isRoll; // 구르기 작동 여부
+    public bool isRollReady = true; // 구르기 가능 여부
+    public bool isRoll; // 구르기 작동 여부
     private bool isAttackReady = true; // 공격 가능 여부
     private bool isHit;
     private bool isInvincible;
@@ -38,7 +38,7 @@ public class Player : MonoBehaviour
         rigid = GetComponent<Rigidbody>();
     }
 
-    void FixedUpdate()
+    void Update()
     {
         GetInput();
         Move();
