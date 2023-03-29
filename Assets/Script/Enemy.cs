@@ -48,8 +48,9 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Move();
-        Attack();
+        if (InRange()) Attack();
+        else Move();
+        
         if (curHealth <= 0)
         {
             Destroy();
@@ -76,7 +77,7 @@ public class Enemy : MonoBehaviour
     // attackRange(사거리)가 플레이어와 적 위치 차이 벡터보다 클 시 공격 가능
     void Attack()
     {
-        if ((transform.position - player.transform.position).magnitude <= attackRange && !isHit && isHitReady)
+        if (!isHit && isHitReady)
         {
             anim.SetTrigger("isAttack");
             player.Hit(attackDamage);
@@ -85,6 +86,11 @@ public class Enemy : MonoBehaviour
             StartCoroutine("Attacking", 0.5f);
             StartCoroutine(AttackDelay());
         }
+    }
+
+    bool InRange()
+    {
+        return (transform.position - player.transform.position).magnitude <= attackRange;
     }
     
     // 공격 도중 재공격 및 다른 모션 불가
