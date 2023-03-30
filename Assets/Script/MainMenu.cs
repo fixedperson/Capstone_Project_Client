@@ -3,7 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    public GameObject audioSlider;
+    public GameObject audioSlider; // 오디오 버튼 눌렀을 때 슬라이더가 보이게 하기위한 변수
+
     public void Play()
     {
         SceneManager.LoadScene("MainScene");
@@ -21,7 +22,6 @@ public class MainMenu : MonoBehaviour
 
     public void ShowAudio()
     {
-        if (audioSlider.activeSelf == true) audioSlider.SetActive(false);
-        else if (audioSlider.activeSelf == false) audioSlider.SetActive(true);
+        audioSlider.SetActive(!audioSlider.activeSelf);
     }
 }
