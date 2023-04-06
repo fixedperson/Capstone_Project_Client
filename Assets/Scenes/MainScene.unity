@@ -1196,8 +1196,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -312.02002, y: 155.9407}
-  m_SizeDelta: {x: 216.75, y: 61.1235}
+  m_AnchoredPosition: {x: -396.36, y: 209.46216}
+  m_SizeDelta: {x: 275.25, y: 77.6205}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &1011005344
 RectTransform:
@@ -2748,6 +2748,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2482314357190476398, guid: 3b5107c154331024cb8a782e75a2867b, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2482314357190476398, guid: 3b5107c154331024cb8a782e75a2867b, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2482314357190476399, guid: 3b5107c154331024cb8a782e75a2867b, type: 3}
       propertyPath: m_CollisionDetection
       value: 1
@@ -2794,6 +2802,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5058570069114036687, guid: 3b5107c154331024cb8a782e75a2867b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5088466340386579670, guid: 3b5107c154331024cb8a782e75a2867b, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5088466340386579670, guid: 3b5107c154331024cb8a782e75a2867b, type: 3}
