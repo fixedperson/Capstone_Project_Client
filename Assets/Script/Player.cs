@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     public float moveSpeed;
     public float rollCoolTime = 3.0f;
     public Weapon equipWeapon; // 장착중인 무기
-    public float attackDelay = 0.3f; // 공격 딜레이
+    public float attackDelay = 0.1f; // 공격 딜레이
     public int maxHealth; // 최대 체력
     public int curHealth; // 현재 체력
 

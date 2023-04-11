@@ -18,7 +18,8 @@ public class Weapon : MonoBehaviour
     public Type type;
     
     // 무기의 공격 범위
-    public BoxCollider meleeArea;
+    private BoxCollider meleeArea;
+    
     public int damage;
 
     private Player player;
@@ -30,6 +31,7 @@ public class Weapon : MonoBehaviour
     {
         player = GetComponentInParent<Player>();
         recentDamageList = new List<Enemy>();
+        meleeArea = GetComponent<BoxCollider>();
     }
 
     public void Use()
@@ -59,12 +61,25 @@ public class Weapon : MonoBehaviour
         
         else if (type == Type.TwoHandSword)
         {
-            
+            StopCoroutine("THS");
+            StartCoroutine("THS");
         }
     }
 
     // Sword And Shield의 공격 코루틴
     IEnumerator SAS()
+    {
+        while (player.isAttack)
+        {
+            meleeArea.enabled = true;
+            
+            yield return new WaitForFixedUpdate();
+        }
+
+        meleeArea.enabled = false;
+    }
+
+    IEnumerator THS()
     {
         while (player.isAttack)
         {
