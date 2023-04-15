@@ -18,15 +18,16 @@ public class ObjectManager
 	{
 		if (myPlayer)
 		{
-			GameObject gameObject = Managers.Resource.Instantiate("Creature/HeroPlayer");
+			GameObject gameObject = Managers.Resource.Instantiate("Player/HeroPlayer");
 			PlayerCamera.targetTransform = gameObject.transform;
 			gameObject.GetComponent<MyPlayer>().enabled = true;
+			gameObject.GetComponent<MyPlayer>().moveSpeed = 5;
 			gameObject.name = info.Name;
 			_players.Add(info.PlayerId, gameObject);
 		}
 		else
 		{
-			GameObject gameObject = Managers.Resource.Instantiate("Creature/MC01");
+			GameObject gameObject = Managers.Resource.Instantiate("Player/MC01");
 			gameObject.name = info.Name;
 			gameObject.GetComponent<Player>().enabled = true;
 			gameObject.GetComponent<Player>().moveSpeed = 5;
@@ -37,7 +38,7 @@ public class ObjectManager
 
 	public void AddMonster()
 	{
-		GameObject gameObject = Managers.Resource.Instantiate("Creature/MC01");
+		GameObject gameObject = Managers.Resource.Instantiate("Player/MC01");
 		gameObject.name = "bat";
 	}
 	

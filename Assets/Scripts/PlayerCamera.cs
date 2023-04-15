@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour
 {
-    public Transform targetTransform;
+    public static Transform targetTransform;
     public Vector3 cameraOffset;
 
     // 타겟의 시점 고정
