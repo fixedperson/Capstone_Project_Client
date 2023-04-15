@@ -12,7 +12,7 @@ class PacketHandler
 	public static void S_EnterGameHandler(PacketSession session, IMessage packet)
 	{
 		S_EnterGame enterGamePacket = packet as S_EnterGame;
-		Managers.Object.Add(enterGamePacket.Player, myPlayer: true);
+		Managers.Object.PlayerAdd(enterGamePacket.Player, myPlayer: true);
 		
 	}
 
@@ -21,12 +21,21 @@ class PacketHandler
 		S_LeaveGame leaveGameHandler = packet as S_LeaveGame;
 	}
 	
-	public static void S_SpawnHandler(PacketSession session, IMessage packet)
+	public static void S_OtherplayerSpawnHandler(PacketSession session, IMessage packet)
 	{
-		S_Spawn spawnPacket = packet as S_Spawn;
+		S_OtherPlayerSpawn spawnPacket = packet as S_OtherPlayerSpawn;
 		foreach (PlayerInfo player in spawnPacket.Players)
 		{
-			Managers.Object.Add(player, myPlayer: false);
+			Managers.Object.PlayerAdd(player, myPlayer: false);
+		}
+	}
+	
+	public static void S_EnemySpawnHandler(PacketSession session, IMessage packet)
+	{
+		S_EnemySpawn spawnPacket = packet as S_EnemySpawn;
+		foreach (EnemyInfo enemy in spawnPacket.Enemys)
+		{
+			Managers.Object.EnemyAdd(enemy);
 		}
 	}
 	

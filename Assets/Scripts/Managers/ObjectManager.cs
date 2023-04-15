@@ -2,8 +2,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using Random = System.Random;
 
 public class ObjectManager
 {
@@ -12,34 +14,43 @@ public class ObjectManager
 	
 	// 몬스터 리스트 
 	Dictionary<int, GameObject> _enemys = new Dictionary<int, GameObject>();
+
+	Random rand = new Random();
 	
 	// 몬스터와 플레이어 Add 함수 구분
-	public void Add(PlayerInfo info, bool myPlayer = false)
+	public void PlayerAdd(PlayerInfo playerInfo, bool myPlayer = false)
 	{
 		if (myPlayer)
 		{
 			GameObject gameObject = Managers.Resource.Instantiate("Player/HeroPlayer");
 			PlayerCamera.targetTransform = gameObject.transform;
-			gameObject.GetComponent<MyPlayer>().enabled = true;
-			gameObject.GetComponent<MyPlayer>().moveSpeed = 5;
-			gameObject.name = info.Name;
-			_players.Add(info.PlayerId, gameObject);
+			MyPlayer temp = gameObject.GetComponent<MyPlayer>();
+			temp.enabled = true;
+			temp.moveSpeed = 5;
+			gameObject.name = playerInfo.Name;
+			_players.Add(playerInfo.PlayerId, gameObject);
 		}
 		else
 		{
 			GameObject gameObject = Managers.Resource.Instantiate("Player/MC01");
-			gameObject.name = info.Name;
-			gameObject.GetComponent<Player>().enabled = true;
-			gameObject.GetComponent<Player>().moveSpeed = 5;
-			_players.Add(info.PlayerId, gameObject);
+			gameObject.name = playerInfo.Name;
+			Player temp = gameObject.GetComponent<Player>();
+			temp.enabled = true;
+			temp.moveSpeed = 5;
+			_players.Add(playerInfo.PlayerId, gameObject);
 		}
-		
 	}
 
-	public void AddMonster()
+	public void EnemyAdd(EnemyInfo enemyInfo)
 	{
-		GameObject gameObject = Managers.Resource.Instantiate("Player/MC01");
-		gameObject.name = "bat";
+		GameObject gameObject = Managers.Resource.Instantiate("Enemy/Bat");
+		Enemy temp = gameObject.GetComponent<Enemy>();
+		temp.enabled = true;
+		temp.moveSpeed = 3;
+		temp.maxHealth = 100;
+		temp.curHealth = temp.maxHealth;
+		temp.player = _players.ElementAt(rand.Next(0, _players.Count)).Value.GetComponent<Player>();
+		temp.transform.position = new Vector3(enemyInfo.PosInfo.PosX, 0, enemyInfo.PosInfo.PosZ);
 	}
 	
 	public void Remove(int id)
