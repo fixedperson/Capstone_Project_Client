@@ -26,8 +26,8 @@ namespace Google.Protobuf.Protocol {
           string.Concat(
             "Cg5Qcm90b2NvbC5wcm90bxIIUHJvdG9jb2waH2dvb2dsZS9wcm90b2J1Zi90",
             "aW1lc3RhbXAucHJvdG8iMwoLU19FbnRlckdhbWUSJAoGcGxheWVyGAEgASgL",
-            "MhQuUHJvdG9jb2wuUGxheWVySW5mbyINCgtTX0xlYXZlR2FtZSI7ChJTX09o",
-            "dGVyUGxheWVyU3Bhd24SJQoHcGxheWVycxgBIAMoCzIULlByb3RvY29sLlBs",
+            "MhQuUHJvdG9jb2wuUGxheWVySW5mbyINCgtTX0xlYXZlR2FtZSI7ChJTX090",
+            "aGVyUGxheWVyU3Bhd24SJQoHcGxheWVycxgBIAMoCzIULlByb3RvY29sLlBs",
             "YXllckluZm8iMwoMU19FbmVteVNwYXduEiMKBmVuZW15cxgCIAMoCzITLlBy",
             "b3RvY29sLkVuZW15SW5mbyIeCglTX0Rlc3Bhd24SEQoJcGxheWVySWRzGAEg",
             "AygFIjEKBkNfTW92ZRInCgdwb3NJbmZvGAEgASgLMhYuUHJvdG9jb2wuUG9z",
@@ -52,7 +52,7 @@ namespace Google.Protobuf.Protocol {
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Google.Protobuf.Protocol.MsgId), }, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Google.Protobuf.Protocol.S_EnterGame), global::Google.Protobuf.Protocol.S_EnterGame.Parser, new[]{ "Player" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Google.Protobuf.Protocol.S_LeaveGame), global::Google.Protobuf.Protocol.S_LeaveGame.Parser, null, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Google.Protobuf.Protocol.S_OhterPlayerSpawn), global::Google.Protobuf.Protocol.S_OhterPlayerSpawn.Parser, new[]{ "Players" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Google.Protobuf.Protocol.S_OtherPlayerSpawn), global::Google.Protobuf.Protocol.S_OtherPlayerSpawn.Parser, new[]{ "Players" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Google.Protobuf.Protocol.S_EnemySpawn), global::Google.Protobuf.Protocol.S_EnemySpawn.Parser, new[]{ "Enemys" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Google.Protobuf.Protocol.S_Despawn), global::Google.Protobuf.Protocol.S_Despawn.Parser, new[]{ "PlayerIds" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Google.Protobuf.Protocol.C_Move), global::Google.Protobuf.Protocol.C_Move.Parser, new[]{ "PosInfo" }, null, null, null, null),
@@ -320,11 +320,11 @@ namespace Google.Protobuf.Protocol {
 
   }
 
-  public sealed partial class S_OhterPlayerSpawn : pb::IMessage<S_OhterPlayerSpawn> {
-    private static readonly pb::MessageParser<S_OhterPlayerSpawn> _parser = new pb::MessageParser<S_OhterPlayerSpawn>(() => new S_OhterPlayerSpawn());
+  public sealed partial class S_OtherPlayerSpawn : pb::IMessage<S_OtherPlayerSpawn> {
+    private static readonly pb::MessageParser<S_OtherPlayerSpawn> _parser = new pb::MessageParser<S_OtherPlayerSpawn>(() => new S_OtherPlayerSpawn());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<S_OhterPlayerSpawn> Parser { get { return _parser; } }
+    public static pb::MessageParser<S_OtherPlayerSpawn> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
@@ -337,21 +337,21 @@ namespace Google.Protobuf.Protocol {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public S_OhterPlayerSpawn() {
+    public S_OtherPlayerSpawn() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public S_OhterPlayerSpawn(S_OhterPlayerSpawn other) : this() {
+    public S_OtherPlayerSpawn(S_OtherPlayerSpawn other) : this() {
       players_ = other.players_.Clone();
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public S_OhterPlayerSpawn Clone() {
-      return new S_OhterPlayerSpawn(this);
+    public S_OtherPlayerSpawn Clone() {
+      return new S_OtherPlayerSpawn(this);
     }
 
     /// <summary>Field number for the "players" field.</summary>
@@ -366,11 +366,11 @@ namespace Google.Protobuf.Protocol {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
-      return Equals(other as S_OhterPlayerSpawn);
+      return Equals(other as S_OtherPlayerSpawn);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(S_OhterPlayerSpawn other) {
+    public bool Equals(S_OtherPlayerSpawn other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
@@ -415,7 +415,7 @@ namespace Google.Protobuf.Protocol {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(S_OhterPlayerSpawn other) {
+    public void MergeFrom(S_OtherPlayerSpawn other) {
       if (other == null) {
         return;
       }
