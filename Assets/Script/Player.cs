@@ -99,11 +99,11 @@ public class Player : MonoBehaviour
     // 구르기 도중 이동속도 2배, 방향전환 불가능 기능
     IEnumerator Rolling(float time)
     {
-        moveSpeed *= 1.5f;
+        moveSpeed *= 1.2f;
         yield return new WaitForSeconds(time);
         
         isRoll = false;
-        moveSpeed /= 1.5f;
+        moveSpeed /= 1.2f;
     }
 
     // 구르기 쿨타임 적용
@@ -116,7 +116,7 @@ public class Player : MonoBehaviour
 
     void Attack()
     {
-        if (aDown && isAttackReady && moveVec == Vector3.zero && !isRoll && !isHit && !isInvincible)
+        if (aDown && isAttackReady && moveVec == Vector3.zero && !isRoll && !isHit)
         {
             anim.SetTrigger("comboAttack");
             
@@ -147,7 +147,7 @@ public class Player : MonoBehaviour
 
     public void Hit(int damage)
     {
-        if (!isRoll && !isHit)
+        if (!isRoll && !isHit && !isInvincible)
         {
             StartCoroutine(HitAnimDelay(0.2f, damage));
             StartCoroutine(Hitting(0.5f));
