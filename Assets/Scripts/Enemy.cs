@@ -22,8 +22,8 @@ public class Enemy : MonoBehaviour
 
     public Player player;
     public float moveSpeed;
-    public float attackRange;
-    public float attackDelay;
+    public float attackRange = 3;
+    public float attackDelay = 2;
     public int attackDamage;
 
     public GameObject hpBarPrefab;
