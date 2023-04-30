@@ -5,38 +5,19 @@ using Google.Protobuf.Protocol;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class MyPlayer : MonoBehaviour
+public class MyPlayer : Player
 {
+    public int id;
+    
     public string name;
-    public float moveSpeed;
     public float rollCoolTime = 3.0f;
-    public Weapon equipWeapon; // 장착중인 무기
     public float attackDelay = 0.3f; // 공격 딜레이
-    public int maxHealth; // 최대 체력
-    public int curHealth; // 현재 체력
-
-    private Animator anim; // 플레이어 객체의 Animator
-    private Rigidbody rigid; // 플레이어 객체의 rigidbody
-    
-    public float hAxis;
-    public float vAxis;
-    
-    private bool rDown; // 구르기 버튼
-    private bool aDown; // 공격 버튼
 
     public bool isRollReady = true; // 구르기 가능 여부
-    public bool isRoll; // 구르기 작동 여부
-    private bool isAttackReady = true; // 공격 가능 여부
-    private bool isHit;
-    private bool isInvincible;
-    public bool isAttack; // 공격 작동 여부
-    
-    private Vector3 moveVec; // 이동방향
-    private Vector3 rollVec; // 구르기 할 때의 방향
+    public bool isAttackReady = true; // 공격 가능 여부
 
-    private PositionInfo _positionInfo = new PositionInfo();
-    private ActionInfo _actionInfo = new ActionInfo();
-    public int Id { get; set; }
+    private PlayerPositionInfo _positionInfo = new PlayerPositionInfo();
+    private PlayerActionInfo _actionInfo = new PlayerActionInfo();
     
     void Start()
     {
@@ -76,6 +57,7 @@ public class MyPlayer : MonoBehaviour
         {
             moveVec = Vector3.zero;
         }
+        
         anim.SetBool("isRun", moveVec != Vector3.zero);
         rigid.MovePosition(transform.position + moveSpeed * Time.fixedDeltaTime * moveVec);
         
@@ -86,7 +68,7 @@ public class MyPlayer : MonoBehaviour
     // 이동 패킷 전송
     void SendMovePacket()
     {
-        C_Move movePacket = new C_Move();
+        C_PlayerMove movePacket = new C_PlayerMove();
         _positionInfo.PosX = transform.position.x;
         _positionInfo.PosZ = transform.position.z;
         _positionInfo.HAxis = hAxis;
@@ -153,7 +135,7 @@ public class MyPlayer : MonoBehaviour
     // 액션 패킷 전송
     void SendActionPacket()
     {
-        C_Action actionPacket = new C_Action();
+        C_PlayerAction actionPacket = new C_PlayerAction();
         _actionInfo.ADown = aDown;
         _actionInfo.RDown = rDown;
         actionPacket.ActInfo = _actionInfo;
@@ -176,41 +158,5 @@ public class MyPlayer : MonoBehaviour
         
         isAttackReady = true;
     }
-
-    public void Hit(int damage)
-    {
-        if (!isRoll && !isHit)
-        {
-            StartCoroutine(HitAnimDelay(0.2f, damage));
-            StartCoroutine(Hitting(0.5f));
-            StartCoroutine(Invincible(1.0f));
-        }
-    }
-
-    // 일정 시간 후 피격 애니메이션 실행
-    IEnumerator HitAnimDelay(float time, int damage)
-    {
-        yield return new WaitForSeconds(time);
-            
-        anim.SetTrigger("isHit");
-        curHealth -= damage;
-    }
-
-    // 공격 받는 중
-    IEnumerator Hitting(float time)
-    {
-        isHit = true;
-        yield return new WaitForSeconds(time);
-
-        isHit = false;
-    }
     
-    // 피격 후 무적시간
-    IEnumerator Invincible(float time)
-    {
-        isInvincible = true;
-        yield return new WaitForSeconds(time);
-
-        isInvincible = false;
-    }
 }

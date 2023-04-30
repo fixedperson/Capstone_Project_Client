@@ -805,7 +805,7 @@ Animator:
   m_GameObject: {fileID: 372529990280254974}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: ad1ae03d33f04374cbfa1a4e4f957090, type: 3}
-  m_Controller: {fileID: 9100000, guid: a8fef1da60a213b40b94fa4724b1dc86, type: 2}
+  m_Controller: {fileID: 9100000, guid: 2f9488bea9bb5db428feb8c064a0058e, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -859,7 +859,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 0
   curHealth: 0
+  moveVec: {x: 0, y: 0, z: 0}
   isHit: 0
+  isAttackReady: 1
+  isAttack: 0
   player: {fileID: 0}
   moveSpeed: 0
   attackRange: 0

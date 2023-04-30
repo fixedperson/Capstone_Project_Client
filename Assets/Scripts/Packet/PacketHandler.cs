@@ -21,7 +21,7 @@ class PacketHandler
 		S_LeaveGame leaveGameHandler = packet as S_LeaveGame;
 	}
 	
-	public static void S_OtherplayerSpawnHandler(PacketSession session, IMessage packet)
+	public static void S_OtherPlayerSpawnHandler(PacketSession session, IMessage packet)
 	{
 		S_OtherPlayerSpawn spawnPacket = packet as S_OtherPlayerSpawn;
 		foreach (PlayerInfo player in spawnPacket.Players)
@@ -35,6 +35,7 @@ class PacketHandler
 		S_EnemySpawn spawnPacket = packet as S_EnemySpawn;
 		foreach (EnemyInfo enemy in spawnPacket.Enemys)
 		{
+			Debug.Log(enemy.PlayerId);
 			Managers.Object.EnemyAdd(enemy);
 		}
 	}
@@ -49,10 +50,10 @@ class PacketHandler
 	}
 	
 	// 이름 변경
-	public static void S_MoveHandler(PacketSession session, IMessage packet)
+	public static void S_PlayerMoveHandler(PacketSession session, IMessage packet)
 	{
-		S_Move movePacket = packet as S_Move;
-		GameObject gameObject = Managers.Object.FindById(movePacket.PlayerId);
+		S_PlayerMove movePacket = packet as S_PlayerMove;
+		GameObject gameObject = Managers.Object.PlayerFindById(movePacket.PlayerId);
 		if (gameObject == null)
 			return;
 		Player player = gameObject.GetComponent<Player>();
@@ -70,10 +71,10 @@ class PacketHandler
 		gameObject.transform.position = curPos;
 	}
 
-	public static void S_ActionHandler(PacketSession session, IMessage packet)
+	public static void S_PlayerActionHandler(PacketSession session, IMessage packet)
 	{
-		S_Action actionPacket = packet as S_Action;
-		GameObject gameObject = Managers.Object.FindById(actionPacket.PlayerId);
+		S_PlayerAction actionPacket = packet as S_PlayerAction;
+		GameObject gameObject = Managers.Object.PlayerFindById(actionPacket.PlayerId);
 		if (gameObject == null)
 			return;
 		Player player = gameObject.GetComponent<Player>();
@@ -83,5 +84,32 @@ class PacketHandler
 		// 액션 정보 전송 
 		player.rDown = actionPacket.ActInfo.RDown;
 		player.aDown = actionPacket.ActInfo.ADown;
+	}
+
+	public static void S_EnemyMoveHandler(PacketSession session, IMessage packet)
+	{
+		S_EnemyMove movePacket = packet as S_EnemyMove;
+		GameObject gameObject = Managers.Object.EnemyFindById(movePacket.EnemyId);
+		if (gameObject == null)
+			return;
+		Enemy enemy = gameObject.GetComponent<Enemy>();
+		if (enemy == null)
+			return;
+		
+		enemy.moveVec = (new Vector3(movePacket.Posinfo.PosX, 0, movePacket.Posinfo.PosZ) - enemy.transform.position).normalized;
+	}
+
+	public static void S_TimeInfoHandler(PacketSession session, IMessage packet)
+	{
+		S_TimeInfo timeInfoPacket = packet as S_TimeInfo;
+		GameObject gameObject = GameObject.Find("EventSystem");
+
+		Ui ui = gameObject.GetComponent<Ui>();
+		ui.setTime = timeInfoPacket.Now;
+	}
+	
+	public static void S_EndStageHandler(PacketSession session, IMessage packet)
+	{
+		
 	}
 }

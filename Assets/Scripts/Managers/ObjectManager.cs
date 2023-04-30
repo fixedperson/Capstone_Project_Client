@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
-using Random = System.Random;
 
 public class ObjectManager
 {
@@ -15,8 +14,6 @@ public class ObjectManager
 	// 몬스터 리스트 
 	Dictionary<int, GameObject> _enemys = new Dictionary<int, GameObject>();
 
-	Random rand = new Random();
-	
 	// 몬스터와 플레이어 Add 함수 구분
 	public void PlayerAdd(PlayerInfo playerInfo, bool myPlayer = false)
 	{
@@ -25,6 +22,7 @@ public class ObjectManager
 			GameObject gameObject = Managers.Resource.Instantiate("Player/HeroPlayer");
 			PlayerCamera.targetTransform = gameObject.transform;
 			MyPlayer temp = gameObject.GetComponent<MyPlayer>();
+			temp.id = playerInfo.PlayerId;
 			temp.enabled = true;
 			temp.moveSpeed = 5;
 			gameObject.name = playerInfo.Name;
@@ -49,8 +47,11 @@ public class ObjectManager
 		temp.moveSpeed = 3;
 		temp.maxHealth = 100;
 		temp.curHealth = temp.maxHealth;
-		temp.player = _players.ElementAt(rand.Next(0, _players.Count)).Value.GetComponent<Player>();
+		GameObject target;
+		_players.TryGetValue(enemyInfo.PlayerId, out target);
+		temp.player = target.GetComponent<Player>();
 		temp.transform.position = new Vector3(enemyInfo.PosInfo.PosX, 0, enemyInfo.PosInfo.PosZ);
+		_enemys.Add(enemyInfo.EnemyId, gameObject);
 	}
 	
 	public void Remove(int id)
@@ -60,11 +61,17 @@ public class ObjectManager
 		_players.Remove(id);
 	}
 	
-	public GameObject FindById(int id)
+	public GameObject PlayerFindById(int id)
 	{
 		GameObject gameObject = null;
 		_players.TryGetValue(id, out gameObject);
 		return gameObject;
 	}
-	
+
+	public GameObject EnemyFindById(int id)
+	{
+		GameObject gameObject = null;
+		_enemys.TryGetValue(id, out gameObject);
+		return gameObject;
+	}
 }
