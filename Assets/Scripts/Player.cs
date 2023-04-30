@@ -13,8 +13,8 @@ public class Player : MonoBehaviour
     public int maxHealth; // 최대 체력
     public int curHealth; // 현재 체력
 
-    private Animator anim; // 플레이어 객체의 Animator
-    private Rigidbody rigid; // 플레이어 객체의 rigidbody
+    public Animator anim; // 플레이어 객체의 Animator
+    public Rigidbody rigid; // 플레이어 객체의 rigidbody
     
     public float hAxis;
     public float vAxis;
@@ -23,13 +23,12 @@ public class Player : MonoBehaviour
     public bool aDown; // 공격 버튼
     
     public bool isRoll; // 구르기 작동 여부
-    private bool isHit;
-    private bool isInvincible;
+    public bool isHit;
+    public bool isInvincible;
     public bool isAttack; // 공격 작동 여부
     
     
-    private Vector3 rollVec; // 구르기 할 때의 방향
-    
+    public Vector3 rollVec; // 구르기 할 때의 방향
     public Vector3 curPos; //
     public Vector3 moveVec;// 이동방향
     
@@ -39,9 +38,9 @@ public class Player : MonoBehaviour
         rigid = GetComponent<Rigidbody>();
     }
 
-    public void Update()
+    void Update()
     {
-        MoveToFixedPoint();;
+        Move();;
         Turn();
         Roll();
         Attack();
@@ -49,7 +48,7 @@ public class Player : MonoBehaviour
         aDown = false;
     }
     
-    public void MoveToFixedPoint()
+    void Move()
     {
         if (isRoll)
         {

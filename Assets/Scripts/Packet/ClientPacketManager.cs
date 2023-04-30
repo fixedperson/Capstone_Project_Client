@@ -26,16 +26,22 @@ class PacketManager
 		_handler.Add((ushort)MsgId.SEnterGame, PacketHandler.S_EnterGameHandler);		
 		_onRecv.Add((ushort)MsgId.SLeaveGame, MakePacket<S_LeaveGame>);
 		_handler.Add((ushort)MsgId.SLeaveGame, PacketHandler.S_LeaveGameHandler);		
-		_onRecv.Add((ushort)MsgId.SOtherplayerSpawn, MakePacket<S_OtherPlayerSpawn>);
-		_handler.Add((ushort)MsgId.SOtherplayerSpawn, PacketHandler.S_OtherplayerSpawnHandler);		
+		_onRecv.Add((ushort)MsgId.SOtherPlayerSpawn, MakePacket<S_OtherPlayerSpawn>);
+		_handler.Add((ushort)MsgId.SOtherPlayerSpawn, PacketHandler.S_OtherPlayerSpawnHandler);		
 		_onRecv.Add((ushort)MsgId.SEnemySpawn, MakePacket<S_EnemySpawn>);
 		_handler.Add((ushort)MsgId.SEnemySpawn, PacketHandler.S_EnemySpawnHandler);		
 		_onRecv.Add((ushort)MsgId.SDespawn, MakePacket<S_Despawn>);
 		_handler.Add((ushort)MsgId.SDespawn, PacketHandler.S_DespawnHandler);		
-		_onRecv.Add((ushort)MsgId.SMove, MakePacket<S_Move>);
-		_handler.Add((ushort)MsgId.SMove, PacketHandler.S_MoveHandler);		
-		_onRecv.Add((ushort)MsgId.SAction, MakePacket<S_Action>);
-		_handler.Add((ushort)MsgId.SAction, PacketHandler.S_ActionHandler);
+		_onRecv.Add((ushort)MsgId.SEnemyMove, MakePacket<S_EnemyMove>);
+		_handler.Add((ushort)MsgId.SEnemyMove, PacketHandler.S_EnemyMoveHandler);		
+		_onRecv.Add((ushort)MsgId.SPlayerMove, MakePacket<S_PlayerMove>);
+		_handler.Add((ushort)MsgId.SPlayerMove, PacketHandler.S_PlayerMoveHandler);		
+		_onRecv.Add((ushort)MsgId.SPlayerAction, MakePacket<S_PlayerAction>);
+		_handler.Add((ushort)MsgId.SPlayerAction, PacketHandler.S_PlayerActionHandler);		
+		_onRecv.Add((ushort)MsgId.STimeInfo, MakePacket<S_TimeInfo>);
+		_handler.Add((ushort)MsgId.STimeInfo, PacketHandler.S_TimeInfoHandler);		
+		_onRecv.Add((ushort)MsgId.SEndStage, MakePacket<S_EndStage>);
+		_handler.Add((ushort)MsgId.SEndStage, PacketHandler.S_EndStageHandler);
 	}
 
 	public void OnRecvPacket(PacketSession session, ArraySegment<byte> buffer)
