@@ -14,6 +14,8 @@ public class ObjectManager
 	// 몬스터 리스트 
 	Dictionary<int, GameObject> _enemys = new Dictionary<int, GameObject>();
 
+	private bool hostUser = false;
+
 	// 몬스터와 플레이어 Add 함수 구분
 	public void PlayerAdd(PlayerInfo playerInfo, bool myPlayer = false)
 	{
@@ -43,6 +45,7 @@ public class ObjectManager
 	{
 		GameObject gameObject = Managers.Resource.Instantiate("Enemy/Bat");
 		Enemy temp = gameObject.GetComponent<Enemy>();
+		temp.enemyId = enemyInfo.EnemyId;
 		temp.enabled = true;
 		temp.moveSpeed = 3;
 		temp.maxHealth = 100;
@@ -73,5 +76,15 @@ public class ObjectManager
 		GameObject gameObject = null;
 		_enemys.TryGetValue(id, out gameObject);
 		return gameObject;
+	}
+
+	public void isHostUser()
+	{
+		hostUser = true;
+	}
+
+	public bool getHostUser()
+	{
+		return hostUser;
 	}
 }

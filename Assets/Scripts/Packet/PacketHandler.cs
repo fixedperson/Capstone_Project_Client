@@ -40,9 +40,9 @@ class PacketHandler
 		}
 	}
 	
-	public static void S_DespawnHandler(PacketSession session, IMessage packet)
+	public static void S_DestroyHandler(PacketSession session, IMessage packet)
 	{
-		S_Despawn despawnPacket = packet as S_Despawn;
+		S_Destroy despawnPacket = packet as S_Destroy;
 		foreach (int id in despawnPacket.PlayerIds)
 		{
 			Managers.Object.Remove(id);
@@ -111,5 +111,10 @@ class PacketHandler
 	public static void S_EndStageHandler(PacketSession session, IMessage packet)
 	{
 		
+	}
+
+	public static void S_HostUserHandler(PacketSession session, IMessage packet)
+	{
+		Managers.Object.isHostUser();
 	}
 }

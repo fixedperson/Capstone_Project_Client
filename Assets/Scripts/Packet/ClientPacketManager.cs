@@ -30,8 +30,8 @@ class PacketManager
 		_handler.Add((ushort)MsgId.SOtherPlayerSpawn, PacketHandler.S_OtherPlayerSpawnHandler);		
 		_onRecv.Add((ushort)MsgId.SEnemySpawn, MakePacket<S_EnemySpawn>);
 		_handler.Add((ushort)MsgId.SEnemySpawn, PacketHandler.S_EnemySpawnHandler);		
-		_onRecv.Add((ushort)MsgId.SDespawn, MakePacket<S_Despawn>);
-		_handler.Add((ushort)MsgId.SDespawn, PacketHandler.S_DespawnHandler);		
+		_onRecv.Add((ushort)MsgId.SDestroy, MakePacket<S_Destroy>);
+		_handler.Add((ushort)MsgId.SDestroy, PacketHandler.S_DestroyHandler);		
 		_onRecv.Add((ushort)MsgId.SEnemyMove, MakePacket<S_EnemyMove>);
 		_handler.Add((ushort)MsgId.SEnemyMove, PacketHandler.S_EnemyMoveHandler);		
 		_onRecv.Add((ushort)MsgId.SPlayerMove, MakePacket<S_PlayerMove>);
@@ -41,7 +41,9 @@ class PacketManager
 		_onRecv.Add((ushort)MsgId.STimeInfo, MakePacket<S_TimeInfo>);
 		_handler.Add((ushort)MsgId.STimeInfo, PacketHandler.S_TimeInfoHandler);		
 		_onRecv.Add((ushort)MsgId.SEndStage, MakePacket<S_EndStage>);
-		_handler.Add((ushort)MsgId.SEndStage, PacketHandler.S_EndStageHandler);
+		_handler.Add((ushort)MsgId.SEndStage, PacketHandler.S_EndStageHandler);		
+		_onRecv.Add((ushort)MsgId.SHostUser, MakePacket<S_HostUser>);
+		_handler.Add((ushort)MsgId.SHostUser, PacketHandler.S_HostUserHandler);
 	}
 
 	public void OnRecvPacket(PacketSession session, ArraySegment<byte> buffer)

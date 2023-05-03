@@ -16,9 +16,6 @@ public class MyPlayer : Player
     public bool isRollReady = true; // 구르기 가능 여부
     public bool isAttackReady = true; // 공격 가능 여부
 
-    private PlayerPositionInfo _positionInfo = new PlayerPositionInfo();
-    private PlayerActionInfo _actionInfo = new PlayerActionInfo();
-    
     void Start()
     {
         anim = GetComponent<Animator>();
@@ -32,6 +29,7 @@ public class MyPlayer : Player
         Turn();
         Roll();
         Attack();
+        SendMovePacket();
     }
 
     void GetInput()
@@ -60,20 +58,18 @@ public class MyPlayer : Player
         
         anim.SetBool("isRun", moveVec != Vector3.zero);
         rigid.MovePosition(transform.position + moveSpeed * Time.fixedDeltaTime * moveVec);
-        
-        // 이동 패킷 전송 
-        SendMovePacket();
     }
     
     // 이동 패킷 전송
     void SendMovePacket()
     {
         C_PlayerMove movePacket = new C_PlayerMove();
-        _positionInfo.PosX = transform.position.x;
-        _positionInfo.PosZ = transform.position.z;
-        _positionInfo.HAxis = hAxis;
-        _positionInfo.VAxis = vAxis;
-        movePacket.PosInfo = _positionInfo;
+        PlayerPositionInfo positionInfo = new PlayerPositionInfo();
+        positionInfo.PosX = transform.position.x;
+        positionInfo.PosZ = transform.position.z;
+        positionInfo.HAxis = hAxis;
+        positionInfo.VAxis = vAxis;
+        movePacket.PosInfo = positionInfo;
         Managers.Network.Send(movePacket);
     }
 
@@ -86,7 +82,6 @@ public class MyPlayer : Player
     {
         if (rDown && !isRoll && isRollReady && !isAttack && !isHit)
         {
-            SendActionPacket();
             rollVec = moveVec; // 구르기시 방향 저장
             
             anim.SetTrigger("doRoll");
@@ -96,17 +91,19 @@ public class MyPlayer : Player
             
             StartCoroutine(RollCoolTime(rollCoolTime));
             StartCoroutine(Rolling(0.833f));
+            
+            SendActionPacket();
         }
     }
 
     // 구르기 도중 이동속도 2배, 방향전환 불가능 기능
     IEnumerator Rolling(float time)
     {
-        moveSpeed *= 1.5f;
+        moveSpeed *= 1.3f;
         yield return new WaitForSeconds(time);
         
         isRoll = false;
-        moveSpeed /= 1.5f;
+        moveSpeed /= 1.3f;
     }
 
     // 구르기 쿨타임 적용
@@ -121,12 +118,13 @@ public class MyPlayer : Player
     {
         if (aDown && isAttackReady && moveVec == Vector3.zero && !isRoll && !isHit && !isInvincible)
         {
-            SendActionPacket();
             anim.SetTrigger("comboAttack");
             
             StopCoroutine("Attacking");
             StartCoroutine("Attacking", 0.5f);
             StartCoroutine(AttackDelay(attackDelay));
+            
+            SendActionPacket();
             
             //equipWeapon.Use();
         }
@@ -136,11 +134,13 @@ public class MyPlayer : Player
     void SendActionPacket()
     {
         C_PlayerAction actionPacket = new C_PlayerAction();
-        _actionInfo.ADown = aDown;
-        _actionInfo.RDown = rDown;
-        actionPacket.ActInfo = _actionInfo;
+        PlayerActionInfo actionInfo = new PlayerActionInfo();
+        actionInfo.ADown = aDown;
+        actionInfo.RDown = rDown;
+        actionPacket.ActInfo = actionInfo;
         Managers.Network.Send(actionPacket);
     }
+    
     // 공격 도중 재공격 및 다른 모션 불가
     IEnumerator Attacking(float time)
     {
@@ -158,5 +158,4 @@ public class MyPlayer : Player
         
         isAttackReady = true;
     }
-    
 }
