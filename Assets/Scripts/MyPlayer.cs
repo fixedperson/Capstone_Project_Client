@@ -13,6 +13,7 @@ public class MyPlayer : Player
     public float rollCoolTime = 3.0f;
     public float attackDelay = 0.3f; // 공격 딜레이
 
+    public bool isDelay;
     public bool isRollReady = true; // 구르기 가능 여부
     public bool isAttackReady = true; // 공격 가능 여부
 
@@ -63,14 +64,27 @@ public class MyPlayer : Player
     // 이동 패킷 전송
     void SendMovePacket()
     {
-        C_PlayerMove movePacket = new C_PlayerMove();
-        PlayerPositionInfo positionInfo = new PlayerPositionInfo();
-        positionInfo.PosX = transform.position.x;
-        positionInfo.PosZ = transform.position.z;
-        positionInfo.HAxis = hAxis;
-        positionInfo.VAxis = vAxis;
-        movePacket.PosInfo = positionInfo;
-        Managers.Network.Send(movePacket);
+        if (!isDelay)
+        {
+            C_PlayerMove movePacket = new C_PlayerMove();
+            PlayerPositionInfo positionInfo = new PlayerPositionInfo();
+            positionInfo.PosX = transform.position.x;
+            positionInfo.PosZ = transform.position.z;
+            positionInfo.HAxis = hAxis;
+            positionInfo.VAxis = vAxis;
+            movePacket.PosInfo = positionInfo;
+            Managers.Network.Send(movePacket);
+
+            StopCoroutine("SendDelay");
+            StartCoroutine("SendDelay", 0.1f);
+        }
+    }
+    IEnumerator SendDelay(float time)
+    {
+        isDelay = true;
+        yield return new WaitForSeconds(time);
+        
+        isDelay = false;
     }
 
     void Turn()

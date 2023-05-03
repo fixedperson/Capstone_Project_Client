@@ -19,6 +19,7 @@ public class Enemy : MonoBehaviour
     private BoxCollider boxCollider;
 
     public Vector3 moveVec;
+    public Vector3 curPos;
     public bool isHit;
     public bool isAttackReady = true;
     public bool isAttack;
@@ -104,7 +105,15 @@ public class Enemy : MonoBehaviour
         {
             moveVec = (player.transform.position - transform.position).normalized;
             transform.LookAt(player.transform);
-            rigid.MovePosition(transform.position + moveSpeed * Time.fixedDeltaTime * moveVec);
+            
+            if (Managers.Object.getHostUser())
+            {
+                rigid.MovePosition(transform.position + moveSpeed * Time.fixedDeltaTime * moveVec);
+            }
+            else
+            {
+                transform.position = Vector3.Lerp(transform.position, curPos, Time.deltaTime * moveSpeed);
+            }
         }
     }
 

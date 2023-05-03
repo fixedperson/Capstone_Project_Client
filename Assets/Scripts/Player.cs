@@ -59,7 +59,7 @@ public class Player : MonoBehaviour
             moveVec = Vector3.zero;
         }
         anim.SetBool("isRun", moveVec != Vector3.zero);
-        rigid.MovePosition(transform.position + 5 * Time.fixedDeltaTime * moveVec);
+        transform.position = Vector3.Lerp(transform.position, curPos, Time.deltaTime * moveSpeed);
     }
  
     void Turn()

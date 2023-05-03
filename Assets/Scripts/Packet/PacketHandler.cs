@@ -63,12 +63,8 @@ class PacketHandler
 		Vector3 curPos = new Vector3(movePacket.PosInfo.PosX, 0, movePacket.PosInfo.PosZ);
 		Vector3 moveVec = new Vector3(movePacket.PosInfo.HAxis, 0, movePacket.PosInfo.VAxis).normalized;
 		
-		// 이동 관련 정보 전송 
-		player.moveVec = moveVec;
 		player.curPos = curPos;
-
-		// 이동 동기화
-		gameObject.transform.position = curPos;
+		player.moveVec = moveVec;
 	}
 
 	public static void S_PlayerActionHandler(PacketSession session, IMessage packet)
@@ -95,8 +91,9 @@ class PacketHandler
 		Enemy enemy = gameObject.GetComponent<Enemy>();
 		if (enemy == null)
 			return;
-		
-		enemy.moveVec = (new Vector3(movePacket.Posinfo.PosX, 0, movePacket.Posinfo.PosZ) - enemy.transform.position).normalized;
+
+		enemy.curPos = new Vector3(movePacket.Posinfo.PosX, 0, movePacket.Posinfo.PosZ);
+		enemy.moveVec = (enemy.curPos - enemy.transform.position).normalized;
 	}
 
 	public static void S_TimeInfoHandler(PacketSession session, IMessage packet)

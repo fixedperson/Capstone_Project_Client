@@ -23,10 +23,11 @@ public class ObjectManager
 		{
 			GameObject gameObject = Managers.Resource.Instantiate("Player/HeroPlayer");
 			PlayerCamera.targetTransform = gameObject.transform;
-			MyPlayer temp = gameObject.GetComponent<MyPlayer>();
-			temp.id = playerInfo.PlayerId;
-			temp.enabled = true;
-			temp.moveSpeed = 5;
+			MyPlayer mp = gameObject.GetComponent<MyPlayer>();
+			mp.transform.position = new Vector3(playerInfo.PosInfo.PosX, 0 , playerInfo.PosInfo.PosZ);
+			mp.id = playerInfo.PlayerId;
+			mp.enabled = true;
+			mp.moveSpeed = 5;
 			gameObject.name = playerInfo.Name;
 			_players.Add(playerInfo.PlayerId, gameObject);
 		}
@@ -34,9 +35,10 @@ public class ObjectManager
 		{
 			GameObject gameObject = Managers.Resource.Instantiate("Player/MC01");
 			gameObject.name = playerInfo.Name;
-			Player temp = gameObject.GetComponent<Player>();
-			temp.enabled = true;
-			temp.moveSpeed = 5;
+			Player player = gameObject.GetComponent<Player>();
+			player.transform.position = new Vector3(playerInfo.PosInfo.PosX, 0 , playerInfo.PosInfo.PosZ);
+			player.enabled = true;
+			player.moveSpeed = 5;
 			_players.Add(playerInfo.PlayerId, gameObject);
 		}
 	}
@@ -44,16 +46,16 @@ public class ObjectManager
 	public void EnemyAdd(EnemyInfo enemyInfo)
 	{
 		GameObject gameObject = Managers.Resource.Instantiate("Enemy/Bat");
-		Enemy temp = gameObject.GetComponent<Enemy>();
-		temp.enemyId = enemyInfo.EnemyId;
-		temp.enabled = true;
-		temp.moveSpeed = 3;
-		temp.maxHealth = 100;
-		temp.curHealth = temp.maxHealth;
+		Enemy enemy = gameObject.GetComponent<Enemy>();
+		enemy.enemyId = enemyInfo.EnemyId;
+		enemy.enabled = true;
+		enemy.moveSpeed = 3;
+		enemy.maxHealth = 100;
+		enemy.curHealth = enemy.maxHealth;
 		GameObject target;
 		_players.TryGetValue(enemyInfo.PlayerId, out target);
-		temp.player = target.GetComponent<Player>();
-		temp.transform.position = new Vector3(enemyInfo.PosInfo.PosX, 0, enemyInfo.PosInfo.PosZ);
+		enemy.player = target.GetComponent<Player>();
+		enemy.transform.position = new Vector3(enemyInfo.PosInfo.PosX, 0, enemyInfo.PosInfo.PosZ);
 		_enemys.Add(enemyInfo.EnemyId, gameObject);
 	}
 	
