@@ -10,8 +10,8 @@ public class Player : MonoBehaviour
 {
     public float moveSpeed;
     public Weapon equipWeapon; // 장착중인 무기
-    public int maxHealth; // 최대 체력
-    public int curHealth; // 현재 체력
+    public float maxHealth; // 최대 체력
+    public float curHealth; // 현재 체력
 
     public Animator anim; // 플레이어 객체의 Animator
     public Rigidbody rigid; // 플레이어 객체의 rigidbody
@@ -105,19 +105,15 @@ public class Player : MonoBehaviour
     {
         if (!isRoll && !isHit && !isInvincible)
         {
-            StartCoroutine(HitAnimDelay(0.2f, damage));
+            if (gameObject.TryGetComponent(out MyPlayer mp))
+            {
+                curHealth -= damage;
+                mp.SendHitPacket();
+            }
+            anim.SetTrigger("isHit");
             StartCoroutine(Hitting(0.5f));
             StartCoroutine(Invincible(1.0f));
         }
-    }
-
-    // 일정 시간 후 피격 애니메이션 실행
-    IEnumerator HitAnimDelay(float time, int damage)
-    {
-        yield return new WaitForSeconds(time);
-            
-        anim.SetTrigger("isHit");
-        curHealth -= damage;
     }
 
     // 공격 받는 중

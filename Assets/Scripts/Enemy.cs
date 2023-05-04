@@ -24,6 +24,7 @@ public class Enemy : MonoBehaviour
     public bool isAttackReady = true;
     public bool isAttack;
     public bool isDelay;
+    public bool onHit = false;
 
     public Player player;
     public float moveSpeed;
@@ -53,8 +54,15 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Attack();
-        Move();
+        if (InRange())
+        {
+            Attack();
+        }
+
+        else
+        {
+            Move();
+        }
 
         if (Managers.Object.getHostUser())
         {
@@ -72,6 +80,8 @@ public class Enemy : MonoBehaviour
             hpBar.SetActive(true);
             HpSliderUpdate();
         }
+
+        ReceiveHit();
     }
 
     void SendMovePacket()
@@ -123,10 +133,9 @@ public class Enemy : MonoBehaviour
         if (!isHit && isAttackReady)
         {
             anim.SetTrigger("isAttack");
-            player.Hit(attackDamage);
             
             StopCoroutine("Attacking");
-            StartCoroutine("Attacking", 0.5f);
+            StartCoroutine("Attacking", 0.4f);
             StartCoroutine(AttackDelay());
         }
     }
@@ -141,6 +150,8 @@ public class Enemy : MonoBehaviour
     {
         isAttack = true;
         yield return new WaitForSeconds(time);
+        
+        if(InRange()) player.Hit(attackDamage);
         
         isAttack = false;
     }
@@ -171,12 +182,32 @@ public class Enemy : MonoBehaviour
                 anim.SetTrigger("isHit");
                 weapon.recentDamageList.Add(this);
                 curHealth -= weapon.damage;
-    
+                SendHitPacket();
+
                 StopCoroutine("Hit");
                 StartCoroutine("Hit");
             }
         }
     }
+
+    void SendHitPacket()
+    {
+        C_EnemyHit enemyHit = new C_EnemyHit();
+        enemyHit.CurHp = curHealth;
+        enemyHit.EnemyId = enemyId;
+        Managers.Network.Send(enemyHit);
+    }
+
+    void ReceiveHit()
+    {
+        if (onHit)
+        {
+            anim.SetTrigger("isHit");
+            onHit = false;
+        }
+    }
+    
+    
     
     // 피격도중 다른 모션 불가
     IEnumerator Hit()

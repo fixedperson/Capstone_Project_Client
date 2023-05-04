@@ -40,12 +40,21 @@ class PacketHandler
 		}
 	}
 	
-	public static void S_DestroyHandler(PacketSession session, IMessage packet)
+	public static void S_PlayerDestroyHandler(PacketSession session, IMessage packet)
 	{
-		S_Destroy despawnPacket = packet as S_Destroy;
-		foreach (int id in despawnPacket.PlayerIds)
+		S_PlayerDestroy playerDestroy = packet as S_PlayerDestroy;
+		foreach (int id in playerDestroy.PlayerIds)
 		{
-			Managers.Object.Remove(id);
+			Managers.Object.PlayerRemove(id);
+		}
+	}
+	
+	public static void S_EnemyDestroyHandler(PacketSession session, IMessage packet)
+	{
+		S_EnemyDestroy enemyDestroy = packet as S_EnemyDestroy;
+		foreach (int id in enemyDestroy.EnemyIds)
+		{
+			Managers.Object.EnemyRemove(id);
 		}
 	}
 	
@@ -101,7 +110,7 @@ class PacketHandler
 		S_TimeInfo timeInfoPacket = packet as S_TimeInfo;
 		GameObject gameObject = GameObject.Find("EventSystem");
 
-		Ui ui = gameObject.GetComponent<Ui>();
+		UI ui = gameObject.GetComponent<UI>();
 		ui.setTime = timeInfoPacket.Now;
 	}
 	
@@ -113,5 +122,36 @@ class PacketHandler
 	public static void S_HostUserHandler(PacketSession session, IMessage packet)
 	{
 		Managers.Object.isHostUser();
+	}
+
+	public static void S_EnemyTargetResetHandler(PacketSession session, IMessage packet)
+	{
+		S_EnemyTargetReset enemyTargetReset = packet as S_EnemyTargetReset;
+		Managers.Object.EnemyTargetChange(enemyTargetReset.PlayerId, enemyTargetReset.EnemyId);
+	}
+	
+	public static void S_EnemyHitHandler(PacketSession session, IMessage packet)
+	{
+		S_EnemyHit enemyHit = packet as S_EnemyHit;
+		GameObject gameObject = Managers.Object.EnemyFindById(enemyHit.EnemyId);
+		if (gameObject == null)
+			return;
+		Enemy enemy = gameObject.GetComponent<Enemy>();
+		if (enemy == null)
+			return;
+
+		enemy.curHealth = enemyHit.CurHp;
+		enemy.onHit = true;
+	}
+	
+	public static void S_PlayerHitHandler(PacketSession session, IMessage packet)
+	{
+		S_PlayerHit playerHit = packet as S_PlayerHit;
+		GameObject gameObject = Managers.Object.PlayerFindById(playerHit.PlayerId);
+		if (gameObject == null)
+			return;
+
+		Player player = gameObject.GetComponent<Player>();
+		player.curHealth = playerHit.CurHp;
 	}
 }

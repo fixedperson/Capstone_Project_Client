@@ -1178,8 +1178,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -397.8, y: 208.36682}
-  m_SizeDelta: {x: 276.25, y: 77.902504}
+  m_AnchoredPosition: {x: -362.88, y: 215.00931}
+  m_SizeDelta: {x: 252, y: 71.064}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &1011005344
 RectTransform:
@@ -1445,6 +1445,7 @@ GameObject:
   - component: {fileID: 1011016244}
   - component: {fileID: 1010852186}
   - component: {fileID: 1035680718}
+  - component: {fileID: 1035680719}
   m_Layer: 5
   m_Name: Red
   m_TagString: Untagged
@@ -1751,6 +1752,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1035680719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1024886290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 744a86eea1732de44b19b71ce10eecf2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myPlayer: {fileID: 0}
 --- !u!114 &1035689480
 MonoBehaviour:
   m_ObjectHideFlags: 0

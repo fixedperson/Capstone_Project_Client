@@ -16,6 +16,8 @@ public class MyPlayer : Player
     public bool isDelay;
     public bool isRollReady = true; // 구르기 가능 여부
     public bool isAttackReady = true; // 공격 가능 여부
+    
+    
 
     void Start()
     {
@@ -140,7 +142,7 @@ public class MyPlayer : Player
             
             SendActionPacket();
             
-            //equipWeapon.Use();
+            equipWeapon.Use();
         }
     }
     
@@ -171,5 +173,13 @@ public class MyPlayer : Player
         yield return new WaitForSeconds(time);
         
         isAttackReady = true;
+    }
+
+    public void SendHitPacket()
+    {
+        C_PlayerHit playerHit = new C_PlayerHit();
+        playerHit.CurHp = curHealth;
+        playerHit.PlayerId = id;
+        Managers.Network.Send(playerHit);
     }
 }

@@ -30,10 +30,14 @@ class PacketManager
 		_handler.Add((ushort)MsgId.SOtherPlayerSpawn, PacketHandler.S_OtherPlayerSpawnHandler);		
 		_onRecv.Add((ushort)MsgId.SEnemySpawn, MakePacket<S_EnemySpawn>);
 		_handler.Add((ushort)MsgId.SEnemySpawn, PacketHandler.S_EnemySpawnHandler);		
-		_onRecv.Add((ushort)MsgId.SDestroy, MakePacket<S_Destroy>);
-		_handler.Add((ushort)MsgId.SDestroy, PacketHandler.S_DestroyHandler);		
+		_onRecv.Add((ushort)MsgId.SPlayerDestroy, MakePacket<S_PlayerDestroy>);
+		_handler.Add((ushort)MsgId.SPlayerDestroy, PacketHandler.S_PlayerDestroyHandler);		
+		_onRecv.Add((ushort)MsgId.SEnemyDestroy, MakePacket<S_EnemyDestroy>);
+		_handler.Add((ushort)MsgId.SEnemyDestroy, PacketHandler.S_EnemyDestroyHandler);		
 		_onRecv.Add((ushort)MsgId.SEnemyMove, MakePacket<S_EnemyMove>);
 		_handler.Add((ushort)MsgId.SEnemyMove, PacketHandler.S_EnemyMoveHandler);		
+		_onRecv.Add((ushort)MsgId.SEnemyTargetReset, MakePacket<S_EnemyTargetReset>);
+		_handler.Add((ushort)MsgId.SEnemyTargetReset, PacketHandler.S_EnemyTargetResetHandler);		
 		_onRecv.Add((ushort)MsgId.SPlayerMove, MakePacket<S_PlayerMove>);
 		_handler.Add((ushort)MsgId.SPlayerMove, PacketHandler.S_PlayerMoveHandler);		
 		_onRecv.Add((ushort)MsgId.SPlayerAction, MakePacket<S_PlayerAction>);
@@ -43,7 +47,11 @@ class PacketManager
 		_onRecv.Add((ushort)MsgId.SEndStage, MakePacket<S_EndStage>);
 		_handler.Add((ushort)MsgId.SEndStage, PacketHandler.S_EndStageHandler);		
 		_onRecv.Add((ushort)MsgId.SHostUser, MakePacket<S_HostUser>);
-		_handler.Add((ushort)MsgId.SHostUser, PacketHandler.S_HostUserHandler);
+		_handler.Add((ushort)MsgId.SHostUser, PacketHandler.S_HostUserHandler);		
+		_onRecv.Add((ushort)MsgId.SEnemyHit, MakePacket<S_EnemyHit>);
+		_handler.Add((ushort)MsgId.SEnemyHit, PacketHandler.S_EnemyHitHandler);		
+		_onRecv.Add((ushort)MsgId.SPlayerHit, MakePacket<S_PlayerHit>);
+		_handler.Add((ushort)MsgId.SPlayerHit, PacketHandler.S_PlayerHitHandler);
 	}
 
 	public void OnRecvPacket(PacketSession session, ArraySegment<byte> buffer)

@@ -24,12 +24,19 @@ public class ObjectManager
 			GameObject gameObject = Managers.Resource.Instantiate("Player/HeroPlayer");
 			PlayerCamera.targetTransform = gameObject.transform;
 			MyPlayer mp = gameObject.GetComponent<MyPlayer>();
+
 			mp.transform.position = new Vector3(playerInfo.PosInfo.PosX, 0 , playerInfo.PosInfo.PosZ);
 			mp.id = playerInfo.PlayerId;
 			mp.enabled = true;
 			mp.moveSpeed = 5;
+			mp.maxHealth = 100;
+			mp.curHealth = 100;
+			mp.equipWeapon = GameObject.FindWithTag("Sword").GetComponent<Weapon>();
 			gameObject.name = playerInfo.Name;
 			_players.Add(playerInfo.PlayerId, gameObject);
+			
+			UIStatus ui = GameObject.Find("Red").GetComponent<UIStatus>();
+			ui.myPlayer = mp;
 		}
 		else
 		{
@@ -39,6 +46,8 @@ public class ObjectManager
 			player.transform.position = new Vector3(playerInfo.PosInfo.PosX, 0 , playerInfo.PosInfo.PosZ);
 			player.enabled = true;
 			player.moveSpeed = 5;
+			player.maxHealth = 100;
+			player.curHealth = 100;
 			_players.Add(playerInfo.PlayerId, gameObject);
 		}
 	}
@@ -52,31 +61,46 @@ public class ObjectManager
 		enemy.moveSpeed = 3;
 		enemy.maxHealth = 100;
 		enemy.curHealth = enemy.maxHealth;
-		GameObject target;
-		_players.TryGetValue(enemyInfo.PlayerId, out target);
+		enemy.attackRange = 3;
+		enemy.attackDelay = 2;
+		enemy.attackDamage = 10;
+		_players.TryGetValue(enemyInfo.PlayerId, out GameObject target);
 		enemy.player = target.GetComponent<Player>();
 		enemy.transform.position = new Vector3(enemyInfo.PosInfo.PosX, 0, enemyInfo.PosInfo.PosZ);
 		_enemys.Add(enemyInfo.EnemyId, gameObject);
 	}
-	
-	public void Remove(int id)
+
+	public void EnemyTargetChange(int playerId, int enemyId)
+	{
+		_players.TryGetValue(playerId, out GameObject target);
+		_enemys.TryGetValue(enemyId, out GameObject gameObject);
+		Enemy enemy = gameObject.GetComponent<Enemy>();
+		enemy.player = target.GetComponent<Player>();
+	}
+
+	public void PlayerRemove(int id)
 	{
 		GameObject gameObject = _players[id];
 		Managers.Resource.Destroy(gameObject);
 		_players.Remove(id);
 	}
 	
+	public void EnemyRemove(int id)
+	{
+		GameObject gameObject = _enemys[id];
+		Managers.Resource.Destroy(gameObject);
+		_enemys.Remove(id);
+	}
+
 	public GameObject PlayerFindById(int id)
 	{
-		GameObject gameObject = null;
-		_players.TryGetValue(id, out gameObject);
+		_players.TryGetValue(id, out GameObject gameObject);
 		return gameObject;
 	}
 
 	public GameObject EnemyFindById(int id)
 	{
-		GameObject gameObject = null;
-		_enemys.TryGetValue(id, out gameObject);
+		_enemys.TryGetValue(id, out GameObject gameObject);
 		return gameObject;
 	}
 
