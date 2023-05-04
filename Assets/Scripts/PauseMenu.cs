@@ -20,11 +20,6 @@ public class PauseMenu : MonoBehaviour
         pauseUi.SetActive(!pauseUi.activeSelf);
     }
 
-    public void MainMenu()
-    {
-        SceneManager.LoadScene("StartScene");
-    }
-
     public void Back()
     {
         pauseUi.SetActive(!pauseUi.activeSelf);
