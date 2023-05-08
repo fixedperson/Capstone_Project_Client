@@ -13,7 +13,6 @@ class PacketHandler
 	{
 		S_EnterGame enterGamePacket = packet as S_EnterGame;
 		Managers.Object.PlayerAdd(enterGamePacket.Player, myPlayer: true);
-		
 	}
 
 	public static void S_LeaveGameHandler(PacketSession session, IMessage packet)
@@ -43,19 +42,13 @@ class PacketHandler
 	public static void S_PlayerDestroyHandler(PacketSession session, IMessage packet)
 	{
 		S_PlayerDestroy playerDestroy = packet as S_PlayerDestroy;
-		foreach (int id in playerDestroy.PlayerIds)
-		{
-			Managers.Object.PlayerRemove(id);
-		}
+		Managers.Object.PlayerRemove(playerDestroy.PlayerIds);
 	}
 	
 	public static void S_EnemyDestroyHandler(PacketSession session, IMessage packet)
 	{
 		S_EnemyDestroy enemyDestroy = packet as S_EnemyDestroy;
-		foreach (int id in enemyDestroy.EnemyIds)
-		{
-			Managers.Object.EnemyRemove(id);
-		}
+		Managers.Object.EnemyRemove(enemyDestroy.EnemyIds);
 	}
 	
 	// 이름 변경
@@ -153,5 +146,10 @@ class PacketHandler
 
 		Player player = gameObject.GetComponent<Player>();
 		player.curHealth = playerHit.CurHp;
+	}
+
+	public static void S_PlayerChatHandler(PacketSession session, IMessage packet)
+	{
+		
 	}
 }

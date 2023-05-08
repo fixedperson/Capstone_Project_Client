@@ -111,6 +111,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
-  meleeArea: {fileID: 7642658099430339199}
-  damage: 10
+  damage: 50
   recentDamageList: []

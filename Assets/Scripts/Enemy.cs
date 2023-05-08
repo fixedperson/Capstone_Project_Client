@@ -25,6 +25,7 @@ public class Enemy : MonoBehaviour
     public bool isAttack;
     public bool isDelay;
     public bool onHit = false;
+    public bool doDie = false;
 
     public Player player;
     public float moveSpeed;
@@ -36,7 +37,7 @@ public class Enemy : MonoBehaviour
     public Vector3 hpBarOffset;
     
     private Canvas hpCanvas;
-    private GameObject hpBar;
+    public GameObject hpBar;
     private Slider hpSlider;
     private void Awake()
     {
@@ -66,12 +67,15 @@ public class Enemy : MonoBehaviour
 
         if (Managers.Object.getHostUser())
         {
-            SendMovePacket();
-        }
-        
-        if (curHealth <= 0)
-        {
-            //Destroy();
+            if (curHealth <= 0)
+            {
+                SendDestroyPacket();
+                Die();
+            }
+            else
+            {
+                SendMovePacket();
+            }
         }
 
         if (maxHealth == curHealth) hpBar.SetActive(false);
@@ -100,6 +104,13 @@ public class Enemy : MonoBehaviour
             StartCoroutine("SendDelay", 0.1f);
         }
     }
+
+    void SendDestroyPacket()
+    {
+        C_EnemyDestroy enemyDestroy = new C_EnemyDestroy();
+        enemyDestroy.EnemyIds = enemyId;
+        Managers.Network.Send(enemyDestroy);
+    }
     
     IEnumerator SendDelay(float time)
     {
@@ -111,7 +122,7 @@ public class Enemy : MonoBehaviour
 
     void Move()
     {
-        if (!isHit && !isAttack)
+        if (!isHit && !isAttack && !doDie)
         {
             moveVec = (player.transform.position - transform.position).normalized;
             transform.LookAt(player.transform);
@@ -130,7 +141,7 @@ public class Enemy : MonoBehaviour
     // attackRange(사거리)가 플레이어와 적 위치 차이 벡터보다 클 시 공격 가능
     void Attack()
     {
-        if (!isHit && isAttackReady)
+        if (!isHit && isAttackReady && !doDie)
         {
             anim.SetTrigger("isAttack");
             
@@ -168,7 +179,6 @@ public class Enemy : MonoBehaviour
     // Hp가 0이 될 시 Destroy, 죽는 애니메이션 실행 및 콜라이더 제거 후 일정 시간뒤에 삭제(추가 예정)
     void Destroy()
     {
-        Destroy(hpBar);
         GameObject.Destroy(gameObject);
     }
     
@@ -179,10 +189,14 @@ public class Enemy : MonoBehaviour
         {
             Weapon weapon = other.GetComponent<Weapon>();
             if (!weapon.recentDamageList.Contains(this)) {
-                anim.SetTrigger("isHit");
                 weapon.recentDamageList.Add(this);
                 curHealth -= weapon.damage;
-                SendHitPacket();
+                
+                if (curHealth > 0)
+                {
+                    anim.SetTrigger("isHit");
+                    SendHitPacket();
+                }
 
                 StopCoroutine("Hit");
                 StartCoroutine("Hit");
@@ -200,7 +214,7 @@ public class Enemy : MonoBehaviour
 
     void ReceiveHit()
     {
-        if (onHit)
+        if (onHit && !doDie)
         {
             anim.SetTrigger("isHit");
             onHit = false;
@@ -232,5 +246,22 @@ public class Enemy : MonoBehaviour
     void HpSliderUpdate()
     {
         hpSlider.value = Mathf.Lerp(hpSlider.value, curHealth / maxHealth, Time.deltaTime * 10);
+    }
+
+    public void Die()
+    {
+        if (!doDie)
+        {
+            anim.SetTrigger("doDie");
+            Destroy(hpBar);
+            StartCoroutine("Dying");
+        }
+    }
+
+    IEnumerator Dying()
+    {
+        doDie = true;
+        yield return new WaitForSeconds(1.4f);
+        Destroy();
     }
 }

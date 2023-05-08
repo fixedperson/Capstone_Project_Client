@@ -88,7 +88,7 @@ public class ObjectManager
 	public void EnemyRemove(int id)
 	{
 		GameObject gameObject = _enemys[id];
-		Managers.Resource.Destroy(gameObject);
+		gameObject.GetComponent<Enemy>().Die();
 		_enemys.Remove(id);
 	}
 
