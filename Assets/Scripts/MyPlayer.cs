@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Google.Protobuf.Protocol;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -32,6 +33,8 @@ public class MyPlayer : Player
         Turn();
         Roll();
         Attack();
+        Disbled();
+        
         SendMovePacket();
     }
 
@@ -181,5 +184,23 @@ public class MyPlayer : Player
         playerHit.CurHp = curHealth;
         playerHit.PlayerId = id;
         Managers.Network.Send(playerHit);
+    }
+
+    void Disbled()
+    {
+        if (curHealth <= 0)
+        {
+            gameObject.SetActive(false);
+            SendDisabledPacket();
+            
+            Managers.Object.cameraTargetChange(this);
+        }
+    }
+
+    void SendDisabledPacket()
+    {
+        C_PlayerDestroy playerDestroy = new C_PlayerDestroy();
+        playerDestroy.PlayerId = id;
+        Managers.Network.Send(playerDestroy);
     }
 }

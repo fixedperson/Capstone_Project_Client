@@ -108,7 +108,7 @@ public class Enemy : MonoBehaviour
     void SendDestroyPacket()
     {
         C_EnemyDestroy enemyDestroy = new C_EnemyDestroy();
-        enemyDestroy.EnemyIds = enemyId;
+        enemyDestroy.EnemyId = enemyId;
         Managers.Network.Send(enemyDestroy);
     }
     
@@ -192,7 +192,7 @@ public class Enemy : MonoBehaviour
                 weapon.recentDamageList.Add(this);
                 curHealth -= weapon.damage;
                 
-                if (curHealth > 0)
+                if (curHealth >= 0)
                 {
                     anim.SetTrigger("isHit");
                     SendHitPacket();

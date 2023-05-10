@@ -78,11 +78,10 @@ public class ObjectManager
 		enemy.player = target.GetComponent<Player>();
 	}
 
-	public void PlayerRemove(int id)
+	public void PlayerDisabled(int id)
 	{
 		GameObject gameObject = _players[id];
-		Managers.Resource.Destroy(gameObject);
-		_players.Remove(id);
+		gameObject.SetActive(false);
 	}
 	
 	public void EnemyRemove(int id)
@@ -112,5 +111,16 @@ public class ObjectManager
 	public bool getHostUser()
 	{
 		return hostUser;
+	}
+
+	public void cameraTargetChange(Player p)
+	{
+		foreach (var v in _players)
+		{
+			if (v.Value.GetComponent<Player>() != p)
+			{
+				PlayerCamera.targetTransform = v.Value.transform;
+			}
+		}
 	}
 }

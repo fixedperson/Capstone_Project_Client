@@ -42,13 +42,13 @@ class PacketHandler
 	public static void S_PlayerDestroyHandler(PacketSession session, IMessage packet)
 	{
 		S_PlayerDestroy playerDestroy = packet as S_PlayerDestroy;
-		Managers.Object.PlayerRemove(playerDestroy.PlayerIds);
+		Managers.Object.PlayerDisabled(playerDestroy.PlayerId);
 	}
 	
 	public static void S_EnemyDestroyHandler(PacketSession session, IMessage packet)
 	{
 		S_EnemyDestroy enemyDestroy = packet as S_EnemyDestroy;
-		Managers.Object.EnemyRemove(enemyDestroy.EnemyIds);
+		Managers.Object.EnemyRemove(enemyDestroy.EnemyId);
 	}
 	
 	// 이름 변경
@@ -149,6 +149,11 @@ class PacketHandler
 	}
 
 	public static void S_PlayerChatHandler(PacketSession session, IMessage packet)
+	{
+		
+	}
+	
+	public static void S_GameOverHandler(PacketSession session, IMessage packet)
 	{
 		
 	}
