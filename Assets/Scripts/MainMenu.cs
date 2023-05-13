@@ -4,11 +4,13 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     public GameObject audioSlider; // 오디오 버튼 눌렀을 때 슬라이더가 보이게 하기위한 변수
-    public GameObject image;
+    public GameObject connect;
+    public GameObject prefab;
 
     public void Play()
     {
-        image.SetActive(true);
+        GameObject gameObject = Instantiate(prefab);
+        connect.SetActive(true);
     }
 
     public void Quit()

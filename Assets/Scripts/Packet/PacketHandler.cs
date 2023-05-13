@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 class PacketHandler
 {
@@ -156,5 +157,10 @@ class PacketHandler
 	public static void S_GameOverHandler(PacketSession session, IMessage packet)
 	{
 		
+	}
+	
+	public static void S_GameStartHandler(PacketSession session, IMessage packet)
+	{
+		SceneManager.LoadScene("SelectScene");
 	}
 }
