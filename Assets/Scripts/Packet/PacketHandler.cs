@@ -161,6 +161,24 @@ class PacketHandler
 	
 	public static void S_GameStartHandler(PacketSession session, IMessage packet)
 	{
-		SceneManager.LoadScene("SelectScene");
+		SceneManager.LoadScene("Scenes/SelectScene");
+	}
+	
+	public static void S_PlayerAlreadySelectedHandler(PacketSession session, IMessage packet)
+	{
+		GameObject gameObject = GameObject.Find("ErrorScript");
+		gameObject.GetComponent<Error>().ErrorDisplay();
+	}
+	
+	public static void S_MainGameStartHandler(PacketSession session, IMessage packet)
+	{
+		SceneManager.LoadScene("Scenes/MainScene");
+		Managers.Network.Send(new C_EnterGame());
+	}
+	
+	public static void S_GameReadyHandler(PacketSession session, IMessage packet)
+	{
+		GameObject gameObject = GameObject.Find("ErrorScript");
+		gameObject.GetComponent<Error>().BtnDisappear();
 	}
 }

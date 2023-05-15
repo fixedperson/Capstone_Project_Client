@@ -2906,7 +2906,7 @@ GameObject:
   - component: {fileID: 2482314357190476398}
   - component: {fileID: 256188794539739309}
   m_Layer: 0
-  m_Name: HeroPlayer
+  m_Name: MC01_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

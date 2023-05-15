@@ -8,6 +8,12 @@ using UnityEngine;
 
 public class ObjectManager
 {
+	public enum Character
+	{
+		OHS,
+		THS
+	}
+	
 	// 플레이어 리스트 
 	Dictionary<int, GameObject> _players = new Dictionary<int, GameObject>();
 	
@@ -21,7 +27,17 @@ public class ObjectManager
 	{
 		if (myPlayer)
 		{
-			GameObject gameObject = Managers.Resource.Instantiate("Player/HeroPlayer");
+			GameObject gameObject = null;
+			
+			if (playerInfo.PlayerType == (int)Character.OHS)
+			{
+				gameObject = Managers.Resource.Instantiate("Player/MC01_1");
+			}
+			else if(playerInfo.PlayerType == (int)Character.THS)
+			{
+				gameObject = Managers.Resource.Instantiate("Player/MC15_1");
+			}
+			
 			PlayerCamera.targetTransform = gameObject.transform;
 			MyPlayer mp = gameObject.GetComponent<MyPlayer>();
 
@@ -40,7 +56,17 @@ public class ObjectManager
 		}
 		else
 		{
-			GameObject gameObject = Managers.Resource.Instantiate("Player/MC01");
+			GameObject gameObject = null;
+			
+			if (playerInfo.PlayerType == (int)Character.OHS)
+			{
+				gameObject = Managers.Resource.Instantiate("Player/MC01");
+			}
+			else if(playerInfo.PlayerType == (int)Character.THS)
+			{
+				gameObject = Managers.Resource.Instantiate("Player/MC15");
+			}
+			
 			gameObject.name = playerInfo.Name;
 			Player player = gameObject.GetComponent<Player>();
 			player.transform.position = new Vector3(playerInfo.PosInfo.PosX, 0 , playerInfo.PosInfo.PosZ);
