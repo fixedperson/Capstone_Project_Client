@@ -24,7 +24,8 @@ public class ChatMgr : MonoBehaviour
     public void SendButton()
     {
         if (input.text.Equals("")) return;
-        string msg = string.Format("닉네임 : {0}", input.text);
+        string msg = string.Format("나 : {0}", input.text);
+        SendMsgPacket(input.text);
         ReceiveMsg(msg);
         input.text = "";
         off = false;
@@ -35,6 +36,13 @@ public class ChatMgr : MonoBehaviour
         chatLog.text += "\n" + msg;
         chatList.Add(msg);
         scroll_rect.verticalNormalizedPosition = 0.0f;      //채팅창을 아래로 고정
+    }
+
+    public void SendMsgPacket(string msg)
+    {
+        C_PlayerChat playerChat = new C_PlayerChat();
+        playerChat.Chat = msg;
+        Managers.Network.Send(playerChat);
     }
 
     void Update()

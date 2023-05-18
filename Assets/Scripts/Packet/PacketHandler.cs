@@ -175,7 +175,6 @@ class PacketHandler
 
 	public static void S_PlayerChatHandler(PacketSession session, IMessage packet)
 	{
-		Debug.Log("채팅오냐?");
 		S_PlayerChat playerChat = packet as S_PlayerChat;
 		GameObject gameObject = GameObject.Find("ChatMannager");
 		if (gameObject == null)
@@ -185,7 +184,7 @@ class PacketHandler
 			return;
 		
 		string msg = string.Format("아군 : {0}", playerChat.Chat);
-		chatMgr.SendMessage(msg);
+		chatMgr.ReceiveMsg(msg);
 	}
 	
 	public static void S_GameOverHandler(PacketSession session, IMessage packet)
