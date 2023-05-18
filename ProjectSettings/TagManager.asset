@@ -4,7 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Sword
+  - THS
+  - OHS
   layers:
   - Default
   - TransparentFX

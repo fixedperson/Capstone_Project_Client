@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Google.Protobuf.Protocol;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,22 +18,6 @@ public class ChatMgr : MonoBehaviour
     {
         scroll_rect = GameObject.FindObjectOfType<ScrollRect>();
         ChattingBox.SetActive(false);
-    }
-
-    public void SendButton()
-    {
-        if (input.text.Equals("")) return;
-        string msg = string.Format("닉네임 : {0}", input.text);
-        ReceiveMsg(msg);
-        input.ActivateInputField();
-        input.text = "";                
-    }
-
-    public void ReceiveMsg(string msg)
-    {
-        chatLog.text += "\n" + msg;
-        chatList.Add(msg);
-        scroll_rect.verticalNormalizedPosition = 0.0f;      //채팅창을 아래로 고정
     }
 
     void Update()
@@ -65,5 +50,30 @@ public class ChatMgr : MonoBehaviour
     {
         yield return new WaitForSeconds(5.0f);
         ChattingBox.SetActive(false);
+    }
+    
+    public void SendButton()
+    {
+        if (input.text.Equals("")) return;
+        string msg = string.Format("나 : {0}", input.text);
+        SendChatPacket(input.text);
+        ReceiveMsg(msg);
+        input.ActivateInputField();
+        input.text = "";                
+    }
+
+    public void SendChatPacket(string msg)
+    {
+        C_PlayerChat playerChat = new C_PlayerChat();
+        playerChat.Chat = msg;
+        Managers.Network.Send(playerChat);
+    }
+
+    public void ReceiveMsg(string msg)
+    {
+        chatLog.text += "\n" + msg;
+        chatList.Add(msg);
+        ChattingBox.SetActive(true);
+        scroll_rect.verticalNormalizedPosition = 0.0f;      //채팅창을 아래로 고정
     }
 }

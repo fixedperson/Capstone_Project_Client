@@ -36,6 +36,7 @@ public class Player : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody>();
+        DontDestroyOnLoad(gameObject);
     }
 
     void Update()
