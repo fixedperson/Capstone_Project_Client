@@ -12,6 +12,7 @@ public class ChatMgr : MonoBehaviour
     public Text chatLog;
     public InputField input;
     ScrollRect scroll_rect = null;
+    private bool off = false;
 
     void Start()
     {
@@ -24,8 +25,8 @@ public class ChatMgr : MonoBehaviour
         if (input.text.Equals("")) return;
         string msg = string.Format("닉네임 : {0}", input.text);
         ReceiveMsg(msg);
-        input.ActivateInputField();
-        input.text = "";                
+        input.text = "";
+        off = false;
     }
 
     public void ReceiveMsg(string msg)
@@ -37,33 +38,19 @@ public class ChatMgr : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return) && !input.isFocused)                //활성화일때 엔터 누르면 채팅 송신
+        if (Input.GetKeyDown(KeyCode.Return))
         {
-            SendButton();
-        }
-        if (!ChattingBox.activeSelf && Input.GetKeyDown(KeyCode.Return))        //비활성화일때 엔터 누르면 활성화
-        {
-            ChattingBox.SetActive(true);
-            input.ActivateInputField();
-        }
-        if(input.isFocused) StopCoroutine("ChatBoxInactive");
-        else StartCoroutine("ChatBoxInactive");
-        if (ChattingBox.activeSelf)
-        {
-            if (Input.GetKeyDown(KeyCode.UpArrow))
+            if (!ChattingBox.activeSelf)                                        //비활성화일때 엔터 누르면 활성화
             {
-                scroll_rect.verticalNormalizedPosition += 0.1f;
+                ChattingBox.SetActive(true);
+                input.ActivateInputField();
             }
-            if (Input.GetKeyDown(KeyCode.DownArrow))
-            {
-                scroll_rect.verticalNormalizedPosition -= 0.1f;
-            }
+            if (!input.isFocused)  SendButton();                                    //활성화일때 엔터 누르면 채팅 송신
+            if (ChattingBox.activeSelf && off) { 
+                ChattingBox.SetActive(false); 
+                off = false; 
+            }                                                               //채팅박스 끄기
+            else if (ChattingBox.activeSelf && !off) off = !off;
         }
-    }
-
-    IEnumerator ChatBoxInactive()                                //입력 없으면 5초후에 비활성화
-    {
-        yield return new WaitForSeconds(5.0f);
-        ChattingBox.SetActive(false);
     }
 }
