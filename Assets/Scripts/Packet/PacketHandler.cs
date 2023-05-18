@@ -110,7 +110,6 @@ class PacketHandler
 	
 	public static void S_EndStageHandler(PacketSession session, IMessage packet)
 	{
-		S_EndStage endStage = packet as S_EndStage;
 		
 	}
 
@@ -152,17 +151,7 @@ class PacketHandler
 
 	public static void S_PlayerChatHandler(PacketSession session, IMessage packet)
 	{
-		Debug.Log("채팅오냐?");
-		S_PlayerChat playerChat = packet as S_PlayerChat;
-		GameObject gameObject = GameObject.Find("ChatMannager");
-		if (gameObject == null)
-			return;
-		ChatMgr chatMgr = gameObject.GetComponent<ChatMgr>();
-		if (chatMgr == null)
-			return;
 		
-		string msg = string.Format("아군 : {0}", playerChat.Chat);
-		chatMgr.SendMessage(msg);
 	}
 	
 	public static void S_GameOverHandler(PacketSession session, IMessage packet)

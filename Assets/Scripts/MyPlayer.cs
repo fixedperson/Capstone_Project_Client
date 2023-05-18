@@ -24,7 +24,6 @@ public class MyPlayer : Player
     {
         anim = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody>();
-        DontDestroyOnLoad(gameObject);
     }
 
     void Update()

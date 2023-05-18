@@ -185,7 +185,7 @@ public class Enemy : MonoBehaviour
     // 피격 시 웨폰의 최근 공격 리스트에 추가
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "OHS" || other.tag == "THS")
+        if (other.tag == "Sword")
         {
             Weapon weapon = other.GetComponent<Weapon>();
             if (!weapon.recentDamageList.Contains(this)) {
