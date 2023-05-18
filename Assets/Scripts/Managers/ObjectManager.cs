@@ -163,8 +163,15 @@ public class ObjectManager
 		}
 	}
 
-	public void stageClear()
+	public void stageClear(PlayerInfo playerInfo)
 	{
-		
+		_players.TryGetValue(playerInfo.PlayerId, out GameObject player);
+		player.transform.position = new Vector3(playerInfo.PosInfo.PosX, 0, playerInfo.PosInfo.PosZ);
+		player.SetActive(true);
+	}
+
+	public void enemyClear()
+	{
+		_enemys.Clear();
 	}
 }

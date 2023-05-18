@@ -111,7 +111,30 @@ class PacketHandler
 	public static void S_EndStageHandler(PacketSession session, IMessage packet)
 	{
 		S_EndStage endStage = packet as S_EndStage;
+		int stage = endStage.CurStage % 3;
+
+		if (stage == 0)
+		{
+			SceneManager.LoadScene("Scenes/MainScene");
+		}
 		
+		else if (stage == 1)
+		{
+			SceneManager.LoadScene("Scenes/Main2");
+		}
+
+		else
+		{
+			SceneManager.LoadScene("Scenes/Main3");
+		}
+
+		Managers.Object.stageClear(endStage.Players);
+		foreach (PlayerInfo playerInfo in endStage.Otherplayers)
+		{
+			Managers.Object.stageClear(playerInfo);
+		}
+		
+		Managers.Object.enemyClear();
 	}
 
 	public static void S_HostUserHandler(PacketSession session, IMessage packet)
