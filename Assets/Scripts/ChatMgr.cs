@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Google.Protobuf.Protocol;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,6 +21,7 @@ public class ChatMgr : MonoBehaviour
         ChattingBox.SetActive(false);
     }
 
+<<<<<<< HEAD
     public void SendButton()
     {
         if (input.text.Equals("")) return;
@@ -36,6 +38,8 @@ public class ChatMgr : MonoBehaviour
         scroll_rect.verticalNormalizedPosition = 0.0f;      //채팅창을 아래로 고정
     }
 
+=======
+>>>>>>> 6ff5e687dbcb739a0829fbefe2ea01685370536a
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Return))
@@ -53,4 +57,38 @@ public class ChatMgr : MonoBehaviour
             else if (ChattingBox.activeSelf && !off) off = !off;
         }
     }
+<<<<<<< HEAD
+=======
+
+    IEnumerator ChatBoxInactive()                                //입력 없으면 5초후에 비활성화
+    {
+        yield return new WaitForSeconds(5.0f);
+        ChattingBox.SetActive(false);
+    }
+    
+    public void SendButton()
+    {
+        if (input.text.Equals("")) return;
+        string msg = string.Format("나 : {0}", input.text);
+        SendChatPacket(input.text);
+        ReceiveMsg(msg);
+        input.ActivateInputField();
+        input.text = "";                
+    }
+
+    public void SendChatPacket(string msg)
+    {
+        C_PlayerChat playerChat = new C_PlayerChat();
+        playerChat.Chat = msg;
+        Managers.Network.Send(playerChat);
+    }
+
+    public void ReceiveMsg(string msg)
+    {
+        chatLog.text += "\n" + msg;
+        chatList.Add(msg);
+        ChattingBox.SetActive(true);
+        scroll_rect.verticalNormalizedPosition = 0.0f;      //채팅창을 아래로 고정
+    }
+>>>>>>> 6ff5e687dbcb739a0829fbefe2ea01685370536a
 }

@@ -28,26 +28,34 @@ public class ObjectManager
 		if (myPlayer)
 		{
 			GameObject gameObject = null;
+			MyPlayer mp = null;
 			
 			if (playerInfo.PlayerType == (int)Character.OHS)
 			{
 				gameObject = Managers.Resource.Instantiate("Player/MC01_1");
+				mp = gameObject.GetComponent<MyPlayer>();
+				mp.equipWeapon = GameObject.FindWithTag("OHS").GetComponent<Weapon>();
+				mp.equipWeapon.damage = 30;
+				mp.maxHealth = 150;
+				mp.curHealth = 150;
+				mp.moveSpeed = 5;
 			}
 			else if(playerInfo.PlayerType == (int)Character.THS)
 			{
 				gameObject = Managers.Resource.Instantiate("Player/MC15_1");
+				mp = gameObject.GetComponent<MyPlayer>();
+				mp.equipWeapon = GameObject.FindWithTag("THS").GetComponent<Weapon>();
+				mp.equipWeapon.damage = 50;
+				mp.maxHealth = 100;
+				mp.curHealth = 100;
+				mp.moveSpeed = 4;
 			}
 			
 			PlayerCamera.targetTransform = gameObject.transform;
-			MyPlayer mp = gameObject.GetComponent<MyPlayer>();
 
 			mp.transform.position = new Vector3(playerInfo.PosInfo.PosX, 0 , playerInfo.PosInfo.PosZ);
 			mp.id = playerInfo.PlayerId;
 			mp.enabled = true;
-			mp.moveSpeed = 5;
-			mp.maxHealth = 100;
-			mp.curHealth = 100;
-			mp.equipWeapon = GameObject.FindWithTag("Sword").GetComponent<Weapon>();
 			gameObject.name = playerInfo.Name;
 			_players.Add(playerInfo.PlayerId, gameObject);
 			
@@ -57,23 +65,28 @@ public class ObjectManager
 		else
 		{
 			GameObject gameObject = null;
+			Player player = null;
 			
 			if (playerInfo.PlayerType == (int)Character.OHS)
 			{
 				gameObject = Managers.Resource.Instantiate("Player/MC01");
+				player = gameObject.GetComponent<Player>();
+				player.maxHealth = 150;
+				player.curHealth = 150;
+				player.moveSpeed = 5;
 			}
 			else if(playerInfo.PlayerType == (int)Character.THS)
 			{
 				gameObject = Managers.Resource.Instantiate("Player/MC15");
+				player = gameObject.GetComponent<Player>();
+				player.maxHealth = 100;
+				player.curHealth = 100;
+				player.moveSpeed = 4;
 			}
 			
 			gameObject.name = playerInfo.Name;
-			Player player = gameObject.GetComponent<Player>();
 			player.transform.position = new Vector3(playerInfo.PosInfo.PosX, 0 , playerInfo.PosInfo.PosZ);
 			player.enabled = true;
-			player.moveSpeed = 5;
-			player.maxHealth = 100;
-			player.curHealth = 100;
 			_players.Add(playerInfo.PlayerId, gameObject);
 		}
 	}
@@ -148,5 +161,10 @@ public class ObjectManager
 				PlayerCamera.targetTransform = v.Value.transform;
 			}
 		}
+	}
+
+	public void stageClear()
+	{
+		
 	}
 }
