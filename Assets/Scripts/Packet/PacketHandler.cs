@@ -176,7 +176,7 @@ class PacketHandler
 	public static void S_PlayerChatHandler(PacketSession session, IMessage packet)
 	{
 		S_PlayerChat playerChat = packet as S_PlayerChat;
-		GameObject gameObject = GameObject.Find("ChatMannager");
+		GameObject gameObject = GameObject.Find("ChatManager");
 		if (gameObject == null)
 			return;
 		ChatMgr chatMgr = gameObject.GetComponent<ChatMgr>();
