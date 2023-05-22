@@ -7,11 +7,20 @@ public class UIStatus : MonoBehaviour
 {
     public MyPlayer myPlayer;
 
-    private Image image;
+    public GameObject red;
+
+    public Image image;
+
+    void Awake()
+    {
+        red = GameObject.Find("Red");
+    }
+    
     // Start is called before the first frame update
     void Start()
     {
-        image = GetComponent<Image>();
+        image = red.GetComponent<Image>();
+        DontDestroyOnLoad(gameObject);
     }
 
     // Update is called once per frame

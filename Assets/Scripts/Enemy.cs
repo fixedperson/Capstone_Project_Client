@@ -64,20 +64,7 @@ public class Enemy : MonoBehaviour
         {
             Move();
         }
-
-        if (Managers.Object.getHostUser())
-        {
-            if (curHealth <= 0)
-            {
-                SendDestroyPacket();
-                Die();
-            }
-            else
-            {
-                SendMovePacket();
-            }
-        }
-
+        
         if (maxHealth == curHealth) hpBar.SetActive(false);
         else
         {
@@ -86,6 +73,19 @@ public class Enemy : MonoBehaviour
         }
 
         ReceiveHit();
+        
+        if (Managers.Object.getHostUser())
+        {
+            if (curHealth <= 0)
+            {
+                SendDestroyPacket();
+                Managers.Object.EnemyRemove(enemyId);
+            }
+            else
+            {
+                SendMovePacket();
+            }
+        }
     }
 
     void SendMovePacket()

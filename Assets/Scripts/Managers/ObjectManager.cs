@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ObjectManager
 {
@@ -59,7 +60,7 @@ public class ObjectManager
 			gameObject.name = playerInfo.Name;
 			_players.Add(playerInfo.PlayerId, gameObject);
 			
-			UIStatus ui = GameObject.Find("Red").GetComponent<UIStatus>();
+			UIStatus ui = GameObject.Find("UI Status").GetComponent<UIStatus>();
 			ui.myPlayer = mp;
 		}
 		else
@@ -119,15 +120,15 @@ public class ObjectManager
 
 	public void PlayerDisabled(int id)
 	{
-		GameObject gameObject = _players[id];
+		_players.TryGetValue(id, out GameObject gameObject);
 		gameObject.SetActive(false);
 	}
 	
 	public void EnemyRemove(int id)
 	{
-		GameObject gameObject = _enemys[id];
-		gameObject.GetComponent<Enemy>().Die();
+		_enemys.TryGetValue(id, out GameObject gameObject);
 		_enemys.Remove(id);
+		gameObject.GetComponent<Enemy>().Die();
 	}
 
 	public GameObject PlayerFindById(int id)
@@ -163,11 +164,20 @@ public class ObjectManager
 		}
 	}
 
+	public void myStageClear(PlayerInfo playerInfo)
+	{
+		_players.TryGetValue(playerInfo.PlayerId, out GameObject gameObject);
+		gameObject.transform.position = new Vector3(playerInfo.PosInfo.PosX, 0, playerInfo.PosInfo.PosZ);
+		MyPlayer player = gameObject.GetComponent<MyPlayer>();
+		player.curHealth = player.maxHealth;
+	}
+
 	public void stageClear(PlayerInfo playerInfo)
 	{
-		_players.TryGetValue(playerInfo.PlayerId, out GameObject player);
-		player.transform.position = new Vector3(playerInfo.PosInfo.PosX, 0, playerInfo.PosInfo.PosZ);
-		player.SetActive(true);
+		_players.TryGetValue(playerInfo.PlayerId, out GameObject gameObject);
+		gameObject.transform.position = new Vector3(playerInfo.PosInfo.PosX, 0, playerInfo.PosInfo.PosZ);
+		Player player = gameObject.GetComponent<Player>();
+		player.curHealth = player.maxHealth;
 	}
 
 	public void enemyClear()

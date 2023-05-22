@@ -35,7 +35,7 @@ class PacketHandler
 		S_EnemySpawn spawnPacket = packet as S_EnemySpawn;
 		foreach (EnemyInfo enemy in spawnPacket.Enemys)
 		{
-			Debug.Log(enemy.PlayerId);
+			Debug.Log(enemy.EnemyId);
 			Managers.Object.EnemyAdd(enemy);
 		}
 	}
@@ -128,13 +128,23 @@ class PacketHandler
 			SceneManager.LoadScene("Scenes/Main3");
 		}
 
-		Managers.Object.stageClear(endStage.Players);
+		Time.timeScale = 1;
+		Managers.Object.myStageClear(endStage.Players);
 		foreach (PlayerInfo playerInfo in endStage.Otherplayers)
 		{
 			Managers.Object.stageClear(playerInfo);
 		}
 		
 		Managers.Object.enemyClear();
+		GameClear ui = GameObject.Find("GameClearScript").GetComponent<GameClear>();
+		ui.gameClearScene.SetActive(false);
+	}
+
+	public static void S_GameClearHandler(PacketSession session, IMessage packet)
+	{
+		Time.timeScale = 0;
+		GameObject gameObject = GameObject.Find("GameClearScript");
+		gameObject.GetComponent<GameClear>().GameClearActive();
 	}
 
 	public static void S_HostUserHandler(PacketSession session, IMessage packet)
