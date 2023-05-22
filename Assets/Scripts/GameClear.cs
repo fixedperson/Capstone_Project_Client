@@ -12,7 +12,9 @@ public class GameClear : MonoBehaviour
 
     public void Start()
     {
-        DontDestroyOnLoad(gameObject);
+        var objs = FindObjectsOfType<GameClear>();
+        if(objs.Length == 1) DontDestroyOnLoad(gameObject);
+        else Destroy(gameObject);
     }
 
     public void GameClearActive()

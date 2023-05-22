@@ -20,7 +20,10 @@ public class UIStatus : MonoBehaviour
     void Start()
     {
         image = red.GetComponent<Image>();
-        DontDestroyOnLoad(gameObject);
+
+        var objs = FindObjectsOfType<UIStatus>();
+        if(objs.Length == 1) DontDestroyOnLoad(gameObject);
+        else Destroy(gameObject);
     }
 
     // Update is called once per frame

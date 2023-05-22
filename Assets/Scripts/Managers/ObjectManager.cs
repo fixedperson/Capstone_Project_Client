@@ -121,6 +121,7 @@ public class ObjectManager
 	public void PlayerDisabled(int id)
 	{
 		_players.TryGetValue(id, out GameObject gameObject);
+		gameObject.GetComponent<Player>().disabled = true;
 		gameObject.SetActive(false);
 	}
 	
@@ -169,7 +170,7 @@ public class ObjectManager
 		_players.TryGetValue(playerInfo.PlayerId, out GameObject gameObject);
 		gameObject.transform.position = new Vector3(playerInfo.PosInfo.PosX, 0, playerInfo.PosInfo.PosZ);
 		MyPlayer player = gameObject.GetComponent<MyPlayer>();
-		player.curHealth = player.maxHealth;
+		if (!player.disabled) player.curHealth = player.maxHealth;
 	}
 
 	public void stageClear(PlayerInfo playerInfo)
@@ -177,7 +178,7 @@ public class ObjectManager
 		_players.TryGetValue(playerInfo.PlayerId, out GameObject gameObject);
 		gameObject.transform.position = new Vector3(playerInfo.PosInfo.PosX, 0, playerInfo.PosInfo.PosZ);
 		Player player = gameObject.GetComponent<Player>();
-		player.curHealth = player.maxHealth;
+		if(!player.disabled) player.curHealth = player.maxHealth;
 	}
 
 	public void enemyClear()

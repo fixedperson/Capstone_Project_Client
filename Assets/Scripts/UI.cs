@@ -12,6 +12,13 @@ public class UI : MonoBehaviour
     private int min;
     private int sec;
 
+    private void Awake()
+    {
+        var objs = FindObjectsOfType<UI>();
+        if(objs.Length == 1) DontDestroyOnLoad(gameObject);
+        else Destroy(gameObject);
+    }
+
     void Update()
     {
         min = (int)setTime / 60;

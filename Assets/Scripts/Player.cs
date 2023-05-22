@@ -31,7 +31,8 @@ public class Player : MonoBehaviour
     public Vector3 rollVec; // 구르기 할 때의 방향
     public Vector3 curPos; //
     public Vector3 moveVec;// 이동방향
-    
+
+    public bool disabled = false;
     void Start()
     {
         anim = GetComponent<Animator>();

@@ -191,6 +191,7 @@ public class MyPlayer : Player
     {
         if (curHealth <= 0)
         {
+            disabled = true;
             gameObject.SetActive(false);
             SendDisabledPacket();
             
