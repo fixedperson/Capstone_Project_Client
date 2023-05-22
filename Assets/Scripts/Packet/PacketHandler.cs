@@ -115,7 +115,7 @@ class PacketHandler
 
 		if (stage == 0)
 		{
-			SceneManager.LoadScene("Scenes/MainScene");
+			SceneManager.LoadScene("Scenes/Main1");
 		}
 		
 		else if (stage == 1)
@@ -205,7 +205,7 @@ class PacketHandler
 	
 	public static void S_MainGameStartHandler(PacketSession session, IMessage packet)
 	{
-		SceneManager.LoadScene("Scenes/MainScene");
+		SceneManager.LoadScene("Scenes/Main1");
 		Managers.Network.Send(new C_EnterGame());
 	}
 	
