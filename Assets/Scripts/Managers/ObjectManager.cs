@@ -9,10 +9,20 @@ using UnityEngine.UI;
 
 public class ObjectManager
 {
-	public enum Character
+	enum Character
 	{
 		OHS,
 		THS
+	}
+
+	enum EnemyType
+	{
+		Bat,
+		TurtleShell,
+		Skeleton,
+		Spider,
+		Golem,
+		Orc
 	}
 	
 	// 플레이어 리스트 
@@ -94,7 +104,32 @@ public class ObjectManager
 
 	public void EnemyAdd(EnemyInfo enemyInfo)
 	{
-		GameObject gameObject = Managers.Resource.Instantiate("Enemy/Bat");
+		GameObject gameObject = null;
+		if (enemyInfo.Type == (int)EnemyType.Bat)
+		{
+			gameObject = Managers.Resource.Instantiate("Enemy/Bat");
+		}
+		else if (enemyInfo.Type == (int)EnemyType.Golem)
+		{
+			gameObject = Managers.Resource.Instantiate("Enemy/Golem");
+		}
+		else if (enemyInfo.Type == (int)EnemyType.Orc)
+		{
+			gameObject = Managers.Resource.Instantiate("Enemy/Orc");
+		}
+		else if (enemyInfo.Type == (int)EnemyType.Skeleton)
+		{
+			gameObject = Managers.Resource.Instantiate("Enemy/Skeleton");
+		}
+		else if (enemyInfo.Type == (int)EnemyType.Spider)
+		{
+			gameObject = Managers.Resource.Instantiate("Enemy/Spider");
+		}
+		else
+		{
+			gameObject = Managers.Resource.Instantiate("Enemy/TurtleShell");
+		}
+
 		Enemy enemy = gameObject.GetComponent<Enemy>();
 		enemy.enemyId = enemyInfo.EnemyId;
 		enemy.enabled = true;
