@@ -19,6 +19,11 @@ public class ChatMgr : MonoBehaviour
     {
         scroll_rect = GameObject.FindObjectOfType<ScrollRect>();
         ChattingBox.SetActive(false);
+        
+        var objs = FindObjectsOfType<ChatMgr>();
+        if(objs.Length == 1) DontDestroyOnLoad(gameObject);
+        else Destroy(gameObject);
+        DontDestroyOnLoad(gameObject);
     }
 
     public void SendButton()
