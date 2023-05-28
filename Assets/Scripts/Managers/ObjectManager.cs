@@ -33,7 +33,7 @@ public class ObjectManager
 
 	private bool hostUser = false;
 
-	private int stage = 1;
+	private int stage = 0;
 
 	// 몬스터와 플레이어 Add 함수 구분
 	public void PlayerAdd(PlayerInfo playerInfo, bool myPlayer = false)

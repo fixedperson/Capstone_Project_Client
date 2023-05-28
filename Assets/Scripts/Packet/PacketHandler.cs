@@ -35,7 +35,6 @@ class PacketHandler
 		S_EnemySpawn spawnPacket = packet as S_EnemySpawn;
 		foreach (EnemyInfo enemy in spawnPacket.Enemys)
 		{
-			Debug.Log(enemy.EnemyId);
 			Managers.Object.EnemyAdd(enemy);
 		}
 	}

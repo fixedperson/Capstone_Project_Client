@@ -1310,8 +1310,10 @@ MonoBehaviour:
   attackDelay: 2
   attackDamage: 0
   hpBarPrefab: {fileID: 1446530674619033605, guid: 7611a79998838d84e9aadfbc8267cfef, type: 3}
-  hpBarOffset: {x: 0, y: 0, z: 0}
+  hpBarOffset: {x: 0, y: 2, z: -1}
   hpBar: {fileID: 0}
+  xRange: 25
+  zRange: 25
 --- !u!1 &5950395201995067419
 GameObject:
   m_ObjectHideFlags: 0

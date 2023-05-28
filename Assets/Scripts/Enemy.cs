@@ -11,7 +11,6 @@ public class Enemy : MonoBehaviour
     public int enemyId;
     
     public float maxHealth;
-
     public float curHealth;
 
     private Rigidbody rigid;
@@ -47,12 +46,13 @@ public class Enemy : MonoBehaviour
         rigid = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         boxCollider = GetComponent<BoxCollider>();
+        HPbarInit();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        HPbarInit();
+        
     }
 
     // Update is called once per frame
@@ -82,6 +82,7 @@ public class Enemy : MonoBehaviour
         {
             if (curHealth <= 0)
             {
+                Debug.Log("?");
                 SendDestroyPacket();
                 Managers.Object.EnemyRemove(enemyId);
             }
@@ -202,7 +203,7 @@ public class Enemy : MonoBehaviour
                 weapon.recentDamageList.Add(this);
                 curHealth -= weapon.damage;
                 
-                if (curHealth >= 0)
+                if (curHealth > 0)
                 {
                     anim.SetTrigger("isHit");
                     SendHitPacket();
