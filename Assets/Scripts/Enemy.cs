@@ -82,7 +82,6 @@ public class Enemy : MonoBehaviour
         {
             if (curHealth <= 0)
             {
-                Debug.Log("?");
                 SendDestroyPacket();
                 Managers.Object.EnemyRemove(enemyId);
             }
@@ -202,11 +201,11 @@ public class Enemy : MonoBehaviour
             if (!weapon.recentDamageList.Contains(this)) {
                 weapon.recentDamageList.Add(this);
                 curHealth -= weapon.damage;
+                SendHitPacket();
                 
                 if (curHealth > 0)
                 {
                     anim.SetTrigger("isHit");
-                    SendHitPacket();
                 }
 
                 StopCoroutine("Hit");
