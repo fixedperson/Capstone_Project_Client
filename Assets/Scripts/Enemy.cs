@@ -39,6 +39,9 @@ public class Enemy : MonoBehaviour
     private Canvas hpCanvas;
     public GameObject hpBar;
     private Slider hpSlider;
+    
+    public float xRange = 25;
+    public float zRange = 25;
     private void Awake()
     {
         rigid = GetComponent<Rigidbody>();
@@ -63,6 +66,7 @@ public class Enemy : MonoBehaviour
         else
         {
             Move();
+            MoveLimit();
         }
         
         if (maxHealth == curHealth) hpBar.SetActive(false);
@@ -136,6 +140,12 @@ public class Enemy : MonoBehaviour
                 transform.position = Vector3.Lerp(transform.position, curPos, Time.deltaTime * moveSpeed);
             }
         }
+    }
+    
+    void MoveLimit()
+    {
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -xRange, xRange), transform.position.y
+            ,Mathf.Clamp(transform.position.z, -zRange, zRange));
     }
 
     // attackRange(사거리)가 플레이어와 적 위치 차이 벡터보다 클 시 공격 가능

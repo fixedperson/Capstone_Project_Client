@@ -17,8 +17,6 @@ public class MyPlayer : Player
     public bool isDelay;
     public bool isRollReady = true; // 구르기 가능 여부
     public bool isAttackReady = true; // 공격 가능 여부
-    
-    
 
     void Start()
     {
@@ -31,6 +29,7 @@ public class MyPlayer : Player
     {
         GetInput();
         Move();
+        MoveLimit();
         Turn();
         Roll();
         Attack();
@@ -65,6 +64,11 @@ public class MyPlayer : Player
         
         anim.SetBool("isRun", moveVec != Vector3.zero);
         rigid.MovePosition(transform.position + moveSpeed * Time.fixedDeltaTime * moveVec);
+    }
+    void MoveLimit()
+    {
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -xRange, xRange), transform.position.y
+            ,Mathf.Clamp(transform.position.z, -zRange, zRange));
     }
     
     // 이동 패킷 전송

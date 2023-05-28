@@ -33,6 +33,9 @@ public class Player : MonoBehaviour
     public Vector3 moveVec;// 이동방향
 
     public bool disabled = false;
+
+    public float xRange = 25;
+    public float zRange = 25;
     void Start()
     {
         anim = GetComponent<Animator>();
@@ -42,7 +45,8 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        Move();;
+        Move();
+        MoveLimit();
         Turn();
         Roll();
         Attack();
@@ -63,7 +67,13 @@ public class Player : MonoBehaviour
         anim.SetBool("isRun", moveVec != Vector3.zero);
         transform.position = Vector3.Lerp(transform.position, curPos, Time.deltaTime * moveSpeed);
     }
- 
+
+    void MoveLimit()
+    {
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -xRange, xRange),transform.position.y
+            ,Mathf.Clamp(transform.position.z, -zRange, zRange));
+    }
+
     void Turn()
     {
         transform.LookAt(transform.position + moveVec);
