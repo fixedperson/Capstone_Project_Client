@@ -33,6 +33,8 @@ public class ObjectManager
 
 	private bool hostUser = false;
 
+	private int stage = 1;
+
 	// 몬스터와 플레이어 Add 함수 구분
 	public void PlayerAdd(PlayerInfo playerInfo, bool myPlayer = false)
 	{
@@ -59,7 +61,7 @@ public class ObjectManager
 				mp.equipWeapon.damage = 50;
 				mp.maxHealth = 100;
 				mp.curHealth = 100;
-				mp.moveSpeed = 4;
+				mp.moveSpeed = 5;
 			}
 			
 			PlayerCamera.targetTransform = gameObject.transform;
@@ -92,7 +94,7 @@ public class ObjectManager
 				player = gameObject.GetComponent<Player>();
 				player.maxHealth = 100;
 				player.curHealth = 100;
-				player.moveSpeed = 4;
+				player.moveSpeed = 5;
 			}
 			
 			gameObject.name = playerInfo.Name;
@@ -133,12 +135,12 @@ public class ObjectManager
 		Enemy enemy = gameObject.GetComponent<Enemy>();
 		enemy.enemyId = enemyInfo.EnemyId;
 		enemy.enabled = true;
-		enemy.moveSpeed = 3;
-		enemy.maxHealth = 100;
+		enemy.moveSpeed = 5;
+		enemy.maxHealth = 100 + stage * 10;
 		enemy.curHealth = enemy.maxHealth;
 		enemy.attackRange = 3;
 		enemy.attackDelay = 2;
-		enemy.attackDamage = 10;
+		enemy.attackDamage = 10 + stage * 2;
 		_players.TryGetValue(enemyInfo.PlayerId, out GameObject target);
 		enemy.player = target.GetComponent<Player>();
 		enemy.transform.position = new Vector3(enemyInfo.PosInfo.PosX, 0, enemyInfo.PosInfo.PosZ);
@@ -219,5 +221,10 @@ public class ObjectManager
 	public void enemyClear()
 	{
 		_enemys.Clear();
+	}
+
+	public void stageUp()
+	{
+		stage++;
 	}
 }

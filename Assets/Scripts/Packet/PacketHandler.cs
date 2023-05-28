@@ -111,6 +111,7 @@ class PacketHandler
 	public static void S_EndStageHandler(PacketSession session, IMessage packet)
 	{
 		S_EndStage endStage = packet as S_EndStage;
+		Managers.Object.stageUp();
 		int stage = endStage.CurStage % 3;
 
 		if (stage == 0)
