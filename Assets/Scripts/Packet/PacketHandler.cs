@@ -20,7 +20,7 @@ class PacketHandler
 	{
 		S_LeaveGame leaveGameHandler = packet as S_LeaveGame;
 	}
-	
+
 	public static void S_OtherPlayerSpawnHandler(PacketSession session, IMessage packet)
 	{
 		S_OtherPlayerSpawn spawnPacket = packet as S_OtherPlayerSpawn;
@@ -29,7 +29,7 @@ class PacketHandler
 			Managers.Object.PlayerAdd(player, myPlayer: false);
 		}
 	}
-	
+
 	public static void S_EnemySpawnHandler(PacketSession session, IMessage packet)
 	{
 		S_EnemySpawn spawnPacket = packet as S_EnemySpawn;
@@ -38,19 +38,19 @@ class PacketHandler
 			Managers.Object.EnemyAdd(enemy);
 		}
 	}
-	
+
 	public static void S_PlayerDestroyHandler(PacketSession session, IMessage packet)
 	{
 		S_PlayerDestroy playerDestroy = packet as S_PlayerDestroy;
 		Managers.Object.PlayerDisabled(playerDestroy.PlayerId);
 	}
-	
+
 	public static void S_EnemyDestroyHandler(PacketSession session, IMessage packet)
 	{
 		S_EnemyDestroy enemyDestroy = packet as S_EnemyDestroy;
 		Managers.Object.EnemyRemove(enemyDestroy.EnemyId);
 	}
-	
+
 	// 이름 변경
 	public static void S_PlayerMoveHandler(PacketSession session, IMessage packet)
 	{
@@ -61,10 +61,10 @@ class PacketHandler
 		Player player = gameObject.GetComponent<Player>();
 		if (player == null)
 			return;
-		
+
 		Vector3 curPos = new Vector3(movePacket.PosInfo.PosX, 0, movePacket.PosInfo.PosZ);
 		Vector3 moveVec = new Vector3(movePacket.PosInfo.HAxis, 0, movePacket.PosInfo.VAxis).normalized;
-		
+
 		player.curPos = curPos;
 		player.moveVec = moveVec;
 	}
@@ -78,7 +78,7 @@ class PacketHandler
 		Player player = gameObject.GetComponent<Player>();
 		if (player == null)
 			return;
-		
+
 		// 액션 정보 전송 
 		player.rDown = actionPacket.ActInfo.RDown;
 		player.aDown = actionPacket.ActInfo.ADown;
@@ -106,7 +106,7 @@ class PacketHandler
 		TimerManager timerManager = gameObject.GetComponent<TimerManager>();
 		timerManager.setTime = timeInfoPacket.Now;
 	}
-	
+
 	public static void S_EndStageHandler(PacketSession session, IMessage packet)
 	{
 		S_EndStage endStage = packet as S_EndStage;
@@ -117,7 +117,7 @@ class PacketHandler
 		{
 			SceneManager.LoadScene("Scenes/Main1");
 		}
-		
+
 		else if (stage == 1)
 		{
 			SceneManager.LoadScene("Scenes/Main2");
@@ -134,7 +134,7 @@ class PacketHandler
 		{
 			Managers.Object.stageClear(playerInfo);
 		}
-		
+
 		Managers.Object.enemyClear();
 		StageClearManager ui = GameObject.Find("StageClearManager").GetComponent<StageClearManager>();
 		ui.gameClearScene.SetActive(false);
@@ -157,7 +157,7 @@ class PacketHandler
 		S_EnemyTargetReset enemyTargetReset = packet as S_EnemyTargetReset;
 		Managers.Object.EnemyTargetChange(enemyTargetReset.PlayerId, enemyTargetReset.EnemyId);
 	}
-	
+
 	public static void S_EnemyHitHandler(PacketSession session, IMessage packet)
 	{
 		S_EnemyHit enemyHit = packet as S_EnemyHit;
@@ -171,7 +171,7 @@ class PacketHandler
 		enemy.curHealth = enemyHit.CurHp;
 		enemy.onHit = true;
 	}
-	
+
 	public static void S_PlayerHitHandler(PacketSession session, IMessage packet)
 	{
 		S_PlayerHit playerHit = packet as S_PlayerHit;
@@ -192,34 +192,36 @@ class PacketHandler
 		ChatManager chatManager = gameObject.GetComponent<ChatManager>();
 		if (chatManager == null)
 			return;
-		
+
 		string msg = string.Format("아군 : {0}", playerChat.Chat);
 		chatManager.ReceiveMsg(msg);
 	}
-	
+
 	public static void S_GameOverHandler(PacketSession session, IMessage packet)
 	{
+		S_GameOver gameOver = packet as S_GameOver;
+		
 		GameObject gameObject = GameObject.Find("GameOverManager");
-		gameObject.GetComponent<GameOverManager>().StartFadein();
+		gameObject.GetComponent<GameOverManager>().StartFadein(gameOver.Stage);
 	}
-	
+
 	public static void S_GameStartHandler(PacketSession session, IMessage packet)
 	{
 		SceneManager.LoadScene("Scenes/SelectScene");
 	}
-	
+
 	public static void S_PlayerAlreadySelectedHandler(PacketSession session, IMessage packet)
 	{
 		GameObject gameObject = GameObject.Find("ErrorManager");
 		gameObject.GetComponent<ErrorManager>().ErrorDisplay();
 	}
-	
+
 	public static void S_MainGameStartHandler(PacketSession session, IMessage packet)
 	{
 		SceneManager.LoadScene("Scenes/Main1");
 		Managers.Network.Send(new C_EnterGame());
 	}
-	
+
 	public static void S_GameReadyHandler(PacketSession session, IMessage packet)
 	{
 		GameObject gameObject = GameObject.Find("ErrorManager");
