@@ -6,6 +6,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using Object = UnityEngine.Object;
 
 public class ObjectManager
 {
@@ -31,8 +32,10 @@ public class ObjectManager
 	// 몬스터 리스트 
 	Dictionary<int, GameObject> _enemys = new Dictionary<int, GameObject>();
 
+	// DontDestroyOnLoad 객체들 (메인 화면으로 나갈 시 모든 객체 Destroy)
+	private List<GameObject> _dontDestroyObjects = new List<GameObject>();
+	
 	private bool hostUser = false;
-
 	private int stage = 0;
 
 	// 몬스터와 플레이어 Add 함수 구분
@@ -72,8 +75,10 @@ public class ObjectManager
 			gameObject.name = playerInfo.Name;
 			_players.Add(playerInfo.PlayerId, gameObject);
 			
-			UIStatus ui = GameObject.Find("UI Status").GetComponent<UIStatus>();
+			CharacterHPbarManager ui = GameObject.Find("CharacterHPbarManager").GetComponent<CharacterHPbarManager>();
 			ui.myPlayer = mp;
+			
+			_dontDestroyObjects.Add(gameObject);
 		}
 		else
 		{
@@ -101,6 +106,8 @@ public class ObjectManager
 			player.transform.position = new Vector3(playerInfo.PosInfo.PosX, 0 , playerInfo.PosInfo.PosZ);
 			player.enabled = true;
 			_players.Add(playerInfo.PlayerId, gameObject);
+			
+			_dontDestroyObjects.Add(gameObject);
 		}
 	}
 
@@ -226,5 +233,18 @@ public class ObjectManager
 	public void stageUp()
 	{
 		stage++;
+	}
+
+	public void AddDontDestroyObject(GameObject gameObject)
+	{
+		_dontDestroyObjects.Add(gameObject);
+	}
+
+	public void removeDontDestroyObjects()
+	{
+		foreach (var gameObject in _dontDestroyObjects)
+		{
+			Object.Destroy(gameObject);
+		}
 	}
 }

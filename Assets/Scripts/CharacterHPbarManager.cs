@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIStatus : MonoBehaviour
+public class CharacterHPbarManager : MonoBehaviour
 {
+    private static CharacterHPbarManager instance = null;
+    
     public MyPlayer myPlayer;
 
     public GameObject red;
@@ -13,6 +15,17 @@ public class UIStatus : MonoBehaviour
 
     void Awake()
     {
+        if (instance == null)
+        {
+            instance = this;
+            Managers.Object.AddDontDestroyObject(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+        DontDestroyOnLoad(gameObject);
+        
         red = GameObject.Find("Red");
     }
     
@@ -20,10 +33,6 @@ public class UIStatus : MonoBehaviour
     void Start()
     {
         image = red.GetComponent<Image>();
-
-        var objs = FindObjectsOfType<UIStatus>();
-        if(objs.Length == 1) DontDestroyOnLoad(gameObject);
-        else Destroy(gameObject);
     }
 
     // Update is called once per frame

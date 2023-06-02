@@ -2,11 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CanvasManager : MonoBehaviour
+public enum Character
 {
-    private static CanvasManager instance = null;
-    // Start is called before the first frame update
-    void Awake()
+    OHS, THS
+}
+
+public class DataManager : MonoBehaviour
+{
+    public static DataManager instance;
+
+    private void Awake()
     {
         if (instance == null)
         {
@@ -20,9 +25,5 @@ public class CanvasManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public Character currentCharacter;
 }

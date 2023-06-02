@@ -5,8 +5,10 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class ChatMgr : MonoBehaviour
+public class ChatManager : MonoBehaviour
 {
+    private static ChatManager instance = null;
+    
     public List<string> chatList = new List<string>();
     public GameObject ChattingBox;
     public Button sendBtn;
@@ -15,14 +17,20 @@ public class ChatMgr : MonoBehaviour
     ScrollRect scroll_rect = null;
     private bool off = false;
 
-    void Start()
+    void Awake()
     {
         scroll_rect = GameObject.FindObjectOfType<ScrollRect>();
         ChattingBox.SetActive(false);
         
-        var objs = FindObjectsOfType<ChatMgr>();
-        if(objs.Length == 1) DontDestroyOnLoad(gameObject);
-        else Destroy(gameObject);
+        if (instance == null)
+        {
+            instance = this;
+            Managers.Object.AddDontDestroyObject(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
         DontDestroyOnLoad(gameObject);
     }
 

@@ -720,7 +720,7 @@ GameObject:
   - component: {fileID: 909496627}
   - component: {fileID: 909496626}
   m_Layer: 0
-  m_Name: ErrorScript
+  m_Name: ErrorManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1315,7 +1315,7 @@ GameObject:
   - component: {fileID: 1908960704}
   - component: {fileID: 1908960705}
   m_Layer: 0
-  m_Name: Data Mgr
+  m_Name: DataManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

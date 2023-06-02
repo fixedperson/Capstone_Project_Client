@@ -101,10 +101,10 @@ class PacketHandler
 	public static void S_TimeInfoHandler(PacketSession session, IMessage packet)
 	{
 		S_TimeInfo timeInfoPacket = packet as S_TimeInfo;
-		GameObject gameObject = GameObject.Find("EventSystem");
+		GameObject gameObject = GameObject.Find("UIManager");
 
-		UI ui = gameObject.GetComponent<UI>();
-		ui.setTime = timeInfoPacket.Now;
+		TimerManager timerManager = gameObject.GetComponent<TimerManager>();
+		timerManager.setTime = timeInfoPacket.Now;
 	}
 	
 	public static void S_EndStageHandler(PacketSession session, IMessage packet)
@@ -136,15 +136,15 @@ class PacketHandler
 		}
 		
 		Managers.Object.enemyClear();
-		GameClear ui = GameObject.Find("GameClearScript").GetComponent<GameClear>();
+		StageClearManager ui = GameObject.Find("StageClearManager").GetComponent<StageClearManager>();
 		ui.gameClearScene.SetActive(false);
 	}
 
 	public static void S_GameClearHandler(PacketSession session, IMessage packet)
 	{
 		Time.timeScale = 0;
-		GameObject gameObject = GameObject.Find("GameClearScript");
-		gameObject.GetComponent<GameClear>().GameClearActive();
+		GameObject gameObject = GameObject.Find("StageClearManager");
+		gameObject.GetComponent<StageClearManager>().GameClearActive();
 	}
 
 	public static void S_HostUserHandler(PacketSession session, IMessage packet)
@@ -189,17 +189,18 @@ class PacketHandler
 		GameObject gameObject = GameObject.Find("ChatManager");
 		if (gameObject == null)
 			return;
-		ChatMgr chatMgr = gameObject.GetComponent<ChatMgr>();
-		if (chatMgr == null)
+		ChatManager chatManager = gameObject.GetComponent<ChatManager>();
+		if (chatManager == null)
 			return;
 		
 		string msg = string.Format("아군 : {0}", playerChat.Chat);
-		chatMgr.ReceiveMsg(msg);
+		chatManager.ReceiveMsg(msg);
 	}
 	
 	public static void S_GameOverHandler(PacketSession session, IMessage packet)
 	{
-		
+		GameObject gameObject = GameObject.Find("GameOverManager");
+		gameObject.GetComponent<GameOverManager>().StartFadein();
 	}
 	
 	public static void S_GameStartHandler(PacketSession session, IMessage packet)
@@ -209,8 +210,8 @@ class PacketHandler
 	
 	public static void S_PlayerAlreadySelectedHandler(PacketSession session, IMessage packet)
 	{
-		GameObject gameObject = GameObject.Find("ErrorScript");
-		gameObject.GetComponent<Error>().ErrorDisplay();
+		GameObject gameObject = GameObject.Find("ErrorManager");
+		gameObject.GetComponent<ErrorManager>().ErrorDisplay();
 	}
 	
 	public static void S_MainGameStartHandler(PacketSession session, IMessage packet)
@@ -221,7 +222,7 @@ class PacketHandler
 	
 	public static void S_GameReadyHandler(PacketSession session, IMessage packet)
 	{
-		GameObject gameObject = GameObject.Find("ErrorScript");
-		gameObject.GetComponent<Error>().BtnDisappear();
+		GameObject gameObject = GameObject.Find("ErrorManager");
+		gameObject.GetComponent<ErrorManager>().BtnDisappear();
 	}
 }

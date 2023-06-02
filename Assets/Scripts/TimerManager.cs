@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UI : MonoBehaviour
+public class TimerManager : MonoBehaviour
 {
+    private static TimerManager instance = null;
+    
     public Text timeUi;
 
     public float setTime = 80;
@@ -14,9 +16,16 @@ public class UI : MonoBehaviour
 
     private void Awake()
     {
-        var objs = FindObjectsOfType<UI>();
-        if(objs.Length == 1) DontDestroyOnLoad(gameObject);
-        else Destroy(gameObject);
+        if (instance == null)
+        {
+            instance = this;
+            Managers.Object.AddDontDestroyObject(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+        DontDestroyOnLoad(gameObject);
     }
 
     void Update()

@@ -17,8 +17,8 @@ public class SelectCharacter : MonoBehaviour
 
             if(Physics.Raycast(ray, out hit))
             {
-                if (hit.transform.gameObject.CompareTag("OHS")) DataMgr.instance.currentCharacter = Character.OHS;
-                if (hit.transform.gameObject.CompareTag("THS")) DataMgr.instance.currentCharacter = Character.THS;
+                if (hit.transform.gameObject.CompareTag("OHS")) DataManager.instance.currentCharacter = Character.OHS;
+                if (hit.transform.gameObject.CompareTag("THS")) DataManager.instance.currentCharacter = Character.THS;
                 anim = hit.transform.gameObject.GetComponent<Animator>();
                 onSelect();
                 for (int i = 0; i < chars.Length; i++)

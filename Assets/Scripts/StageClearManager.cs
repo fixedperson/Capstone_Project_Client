@@ -5,16 +5,25 @@ using Google.Protobuf.Protocol;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameClear : MonoBehaviour
+public class StageClearManager : MonoBehaviour
 {
+    private static StageClearManager instance = null;
+    
     public GameObject gameClearScene;
     public GameObject nextStageBtn;
 
-    public void Start()
+    public void Awake()
     {
-        var objs = FindObjectsOfType<GameClear>();
-        if(objs.Length == 1) DontDestroyOnLoad(gameObject);
-        else Destroy(gameObject);
+        if (instance == null)
+        {
+            instance = this;
+            Managers.Object.AddDontDestroyObject(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+        DontDestroyOnLoad(gameObject);
     }
 
     public void GameClearActive()

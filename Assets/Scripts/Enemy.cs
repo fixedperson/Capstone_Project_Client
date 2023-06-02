@@ -248,7 +248,7 @@ public class Enemy : MonoBehaviour
         hpBar = Instantiate<GameObject>(hpBarPrefab, hpCanvas.transform);
         hpSlider = hpBar.GetComponentInChildren<Slider>();
 
-        var hpbar = hpBar.GetComponent<HPbar>();
+        var hpbar = hpBar.GetComponent<EnemyHPbar>();
         hpbar.targetTr = gameObject.transform;
         hpbar.offset = hpBarOffset;
     }

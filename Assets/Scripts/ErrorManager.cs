@@ -4,7 +4,7 @@ using Google.Protobuf.Protocol;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Error : MonoBehaviour
+public class ErrorManager : MonoBehaviour
 {
     public GameObject error;
     public GameObject selectBtn;
@@ -12,7 +12,7 @@ public class Error : MonoBehaviour
     public void Check()
     {
         C_PlayerSelect playerSelect = new C_PlayerSelect();
-        playerSelect.PlayerCode = (int)DataMgr.instance.currentCharacter;
+        playerSelect.PlayerCode = (int)DataManager.instance.currentCharacter;
         Managers.Network.Send(playerSelect);
     }
 

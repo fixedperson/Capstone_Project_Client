@@ -388,6 +388,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 130288976}
   m_CullTransparentMesh: 1
+--- !u!1 &249468260
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 249468262}
+  - component: {fileID: 249468261}
+  m_Layer: 0
+  m_Name: GameOverManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &249468261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 249468260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b1318eb3ab13a5479943442679864b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 1429181408}
+  fadeTime: 2
+  fadeImg: {fileID: 964336594}
+  fadeText: {fileID: 2049060799}
+--- !u!4 &249468262
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 249468260}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 540.9984, y: 251.00032, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &257022473
 GameObject:
   m_ObjectHideFlags: 0
@@ -606,7 +654,7 @@ GameObject:
   - component: {fileID: 414750449}
   - component: {fileID: 414750448}
   m_Layer: 0
-  m_Name: bgm
+  m_Name: Bgm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1107,7 +1155,7 @@ GameObject:
   - component: {fileID: 694425854}
   - component: {fileID: 694425856}
   m_Layer: 5
-  m_Name: Image
+  m_Name: StageClear
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1336,7 +1384,7 @@ GameObject:
   - component: {fileID: 733740128}
   - component: {fileID: 733740132}
   m_Layer: 0
-  m_Name: EventSystem
+  m_Name: UIManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1788,15 +1836,14 @@ GameObject:
   - component: {fileID: 964336593}
   - component: {fileID: 964336595}
   - component: {fileID: 964336594}
-  - component: {fileID: 964336596}
   - component: {fileID: 964336597}
   m_Layer: 5
-  m_Name: Image
+  m_Name: GameOver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &964336593
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1857,23 +1904,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 964336592}
   m_CullTransparentMesh: 1
---- !u!114 &964336596
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 964336592}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b1318eb3ab13a5479943442679864b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Img: {fileID: 964336592}
-  FadeTime: 2
-  fadeImg: {fileID: 964336594}
-  fadeText: {fileID: 2049060799}
-  button: {fileID: 1429181408}
 --- !u!114 &964336597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2077,8 +2107,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -317, y: 155.5008}
-  m_SizeDelta: {x: 220, y: 62.04}
+  m_AnchoredPosition: {x: -389.52002, y: 204.34512}
+  m_SizeDelta: {x: 270.5, y: 76.281}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &1011005344
 RectTransform:
@@ -2459,7 +2489,7 @@ GameObject:
   - component: {fileID: 1035605226}
   - component: {fileID: 1035650704}
   m_Layer: 5
-  m_Name: Status
+  m_Name: HPStatus
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3085,7 +3115,7 @@ GameObject:
   - component: {fileID: 1369706218}
   - component: {fileID: 1369706217}
   m_Layer: 0
-  m_Name: UI Status
+  m_Name: CharacterHPbarManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3220,7 +3250,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1429181412}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 249468261}
+        m_TargetAssemblyTypeName: GameOverManager, Assembly-CSharp
+        m_MethodName: ButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1429181412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3269,7 +3311,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1476704216}
   m_Layer: 0
-  m_Name: HP Bar
+  m_Name: EnemyHPCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4015,7 +4057,7 @@ GameObject:
   - component: {fileID: 1951074244}
   - component: {fileID: 1951074243}
   m_Layer: 0
-  m_Name: GameClearScript
+  m_Name: StageClearManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4164,8 +4206,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -639.3214, y: -60.1848}
+  m_AnchoredPosition: {x: 7, y: 0}
+  m_SizeDelta: {x: -546.2369, y: -60.1848}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2049060799
 MonoBehaviour:
@@ -4200,7 +4242,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: YOU DIE
+  m_Text: GAME OVER
 --- !u!222 &2049060800
 CanvasRenderer:
   m_ObjectHideFlags: 0
