@@ -105,7 +105,7 @@ public class Enemy : MonoBehaviour
             Managers.Network.Send(enemyMove);
 
             StopCoroutine("SendDelay");
-            StartCoroutine("SendDelay", 0.1f);
+            StartCoroutine("SendDelay", 0.3f);
         }
     }
 
@@ -137,7 +137,7 @@ public class Enemy : MonoBehaviour
             }
             else
             {
-                transform.position = Vector3.Lerp(transform.position, curPos, Time.deltaTime * moveSpeed);
+                transform.position = Vector3.Lerp(transform.position, curPos, Time.fixedDeltaTime * moveSpeed);
             }
         }
     }
