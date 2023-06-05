@@ -7,7 +7,7 @@ public class SetSize : MonoBehaviour
 {
     void Awake()
     {
-        Screen.SetResolution(640,480,false);
+        Screen.SetResolution(800,900,false);
     }
 
     // Start is called before the first frame update
