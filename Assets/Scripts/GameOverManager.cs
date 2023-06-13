@@ -79,8 +79,9 @@ public class GameOverManager : MonoBehaviour
         C_LeaveGame leaveGame = new C_LeaveGame();
         Managers.Network.Send(leaveGame);
         
-        SceneManager.LoadScene("StartScene");
-        Managers.Object.removeDontDestroyObjects();
-        Destroy(GameObject.Find("@Managers"));
+        Application.Quit();
+        // SceneManager.LoadScene("StartScene");
+        // Managers.Object.removeDontDestroyObjects();
+        // Destroy(GameObject.Find("@Managers"));
     }
 }
